@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/menu_home"
+            android:icon="@drawable/ic_home"
+            android:title="Home"/>
+
+        <item android:id="@+id/menu_ticket"
+            android:icon="@drawable/ic_ticket"
+            android:title="Purchase Ticket"/>
+    </group>
+
+
+    <item android:title="others">
+        <menu>
+            <item android:id="@+id/menu_emergency_contact_number"
+                android:icon="@drawable/ic_emergncy"
+                android:title="Emergency Contact Number"/>
+
+
+            <item
+                android:id="@+id/menu_logout"
+                android:title="logout"/>
+        </menu>
+    </item>
+</menu>

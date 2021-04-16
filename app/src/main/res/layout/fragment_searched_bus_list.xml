@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.purchase_ticket.searched_bus_list.SearchedBusListFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/eticketing_bg"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:id="@+id/searched_bus_list_fragment_from_to_container_linearLayout"
+            android:orientation="vertical">
+
+<!--                -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:scaleType="centerCrop"
+                    android:background="@drawable/searched_bus_list_upper_shape"/>
+
+
+                <TextView
+                    android:id="@+id/select_your_bus_textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/print_clearly"
+                    android:text="Select your bus!"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    android:gravity="center_horizontal" />
+
+                <LinearLayout
+                    android:id="@+id/searched_bus_list_fragment_from_to_linearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="30dp"
+                    android:orientation="horizontal"
+                    android:layout_below="@+id/select_your_bus_textView"
+                    android:layout_marginTop="8dp"
+                    android:weightSum="100">
+
+                    <TextView
+                        android:id="@+id/searched_bus_list_fragment_from_textView"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/gotham"
+                        android:text="Dhaka"
+                        android:textAlignment="center"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp"
+                        android:layout_weight="45"
+                        android:gravity="center_horizontal" />
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_baseline_arrow_right_alt_24"
+                        android:layout_weight="10"/>
+
+                    <TextView
+                        android:id="@+id/searched_bus_list_fragment_to_textView"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/gotham"
+                        android:text="Rajshahi"
+                        android:textAlignment="center"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp"
+                        android:layout_weight="45"
+                        android:gravity="center_horizontal" />
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/searched_bus_list_fragment_date_day_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/searched_bus_list_fragment_from_to_linearLayout"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/print_clearly"
+                    android:text="10th - Oct - 1998 | Tuesday"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    android:gravity="center_horizontal" />
+
+            </RelativeLayout>
+<!--                -->
+
+        </LinearLayout>
+
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_below="@+id/searched_bus_list_fragment_from_to_container_linearLayout"
+            android:layout_width="match_parent"
+            android:layout_marginHorizontal="8dp"
+            android:layout_height="match_parent"
+            android:id="@+id/search_bus_list_recycleview"
+            android:padding="0dp"/>
+<!--                    android:background="@drawable/searched_bus_list_bg_shape"-->
+
+
+
+    </RelativeLayout>
+
+</FrameLayout>

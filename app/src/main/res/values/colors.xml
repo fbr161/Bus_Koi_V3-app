@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+
+    <color name="eticketing_bg">#F4F5F7</color>
+    <color name="white">#FFFFFF</color>
+
+    <color name="available_seat_color">#EBEAEE</color>
+    <color name="booked_seat_color">#ACACAC</color>
+    <color name="selected_seat_color">#F0A732</color>
+</resources>
