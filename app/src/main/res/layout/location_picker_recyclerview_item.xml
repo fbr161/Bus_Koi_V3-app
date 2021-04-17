@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/location_picker_recyclerview_item_location_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="5dp"
+        android:paddingVertical="5dp"
+        android:gravity="center_vertical"
+        android:fontFamily="@font/calibri"
+        android:text="Name"
+        android:drawableStart="@drawable/ic_location_on_light_blue_24dp"
+        android:drawablePadding="5dp"
+        android:textColor="#303030" />
+
+
+</LinearLayout>

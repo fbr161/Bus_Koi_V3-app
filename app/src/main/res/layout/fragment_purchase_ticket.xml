@@ -31,6 +31,7 @@
 
             <LinearLayout
                 android:id="@+id/purchase_ticket_from"
+                android:clickable="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -56,7 +57,7 @@
                         android:textSize="19sp" />
 
                     <TextView
-                        android:id="@+id/purchase_ticket_from_location"
+                        android:id="@+id/purchase_ticket_from_location_textview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Enter City" />
@@ -80,6 +81,7 @@
 
             <LinearLayout
                 android:id="@+id/purchase_ticket_to"
+                android:clickable="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -105,7 +107,7 @@
                         android:textSize="19sp" />
 
                     <TextView
-                        android:id="@+id/purchase_ticket_to_location"
+                        android:id="@+id/purchase_ticket_to_location_textview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Enter City" />
@@ -140,6 +142,8 @@
         tools:layout_editor_absoluteX="16dp">
 
         <LinearLayout
+            android:id="@+id/purchase_ticket_fragment_date_picker_layout"
+            android:clickable="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

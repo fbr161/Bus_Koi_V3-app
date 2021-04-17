@@ -262,7 +262,7 @@
             android:fontFamily="@font/print_clearly"
             android:text="SUCCESSFUL"
             android:textAlignment="center"
-            android:textColor="#3C3F41"
+            android:textColor="#268F49"
             android:textSize="50sp"
             android:textStyle="bold"
             android:gravity="center_horizontal" />
