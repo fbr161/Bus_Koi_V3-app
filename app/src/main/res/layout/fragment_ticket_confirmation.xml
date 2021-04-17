@@ -3,12 +3,290 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.purchase_ticket.ticket_confirmation.TicketConfirmationFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:background="@color/eticketing_bg"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <!--    blue radious bg    -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:id="@+id/ticket_confirmation_fragment_primary_clr_radious_bg"
+            android:layout_marginHorizontal="1dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:orientation="vertical"
+            android:layout_height="120dp"
+            android:scaleType="centerCrop"
+            android:background="@drawable/searched_bus_list_upper_shape"/>
+
+        <!--   from,to,date info    -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:orientation="vertical">
+
+            <!--                -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="1dp">
+
+                <LinearLayout
+                    android:id="@+id/ticket_confirmation_fragment_from_to_linearLayout"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="30dp"
+                    android:orientation="horizontal"
+                    android:layout_below="@+id/select_your_bus_textView"
+                    android:weightSum="100">
+
+                    <TextView
+                        android:id="@+id/ticket_confirmation_fragment_from_textView"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/gotham"
+                        android:text="Dhaka"
+                        android:textAlignment="center"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp"
+                        android:layout_weight="45"
+                        android:gravity="center_horizontal" />
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_baseline_arrow_right_alt_24"
+                        android:layout_weight="10"/>
+
+                    <TextView
+                        android:id="@+id/ticket_confirmation_fragment_to_textView"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/gotham"
+                        android:text="Rajshahi"
+                        android:textAlignment="center"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp"
+                        android:layout_weight="45"
+                        android:gravity="center_horizontal" />
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/ticket_confirmation_fragment_date_day_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ticket_confirmation_fragment_from_to_linearLayout"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/print_clearly"
+                    android:text="10th - Oct - 1998 | Tuesday"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    android:gravity="center_horizontal" />
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+        <!--   card view bus & seat info     -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-50dp"
+            android:layout_below="@+id/ticket_confirmation_fragment_primary_clr_radious_bg"
+            android:id="@+id/ticket_confirmation_ticket_info_container_cardview"
+            app:cardCornerRadius="4dp"
+            app:cardUseCompatPadding="true"
+            android:layout_marginHorizontal="8dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            app:contentPadding="16dp"
+            tools:ignore="MissingConstraints">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="100">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="60"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/ticket_confirmation_ticket_info_time"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/calibri"
+                            android:text="10:00PM - 07:30AM"
+                            android:textStyle="bold"
+                            android:textColor="#000000"
+                            />
+                        <TextView
+                            android:id="@+id/ticket_confirmation_ticket_info_company_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/calibri"
+                            android:text="Hanif Paribahon"
+                            android:textStyle="bold"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginBottom="4dp"
+                            android:textColor="#4b4b4b"
+                            />
+                        <TextView
+                            android:id="@+id/ticket_confirmation_ticket_info_ac_status"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/calibri"
+                            android:text=" Non A/C (2+2)"
+                            android:textColor="#8a8a8a"
+                            />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="40"
+                        android:gravity="center"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/ticket_confirmation_ticket_info_total_fare"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/calibri"
+                            android:text="৳400.00"
+                            android:textAlignment="textEnd"
+                            android:textSize="24sp"
+                            android:textStyle="bold"
+                            android:textColor="#f5a622"
+                            android:gravity="end" />
+                        <TextView
+                            android:id="@+id/ticket_confirmation_ticket_info_selected_seat_number"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/calibri"
+                            android:text="24 Seats"
+                            android:textAlignment="textEnd"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginBottom="4dp"
+                            android:textColor="#89868C"
+                            android:gravity="end" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginVertical="20dp"
+                    android:background="#B8B8B8" />
+
+                <!--    user name & phn no        -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/gotham"
+                    android:text="Name"
+                    android:drawableStart="@drawable/ic_user_circle_24"
+                    android:drawablePadding="10dp"
+                    android:textColor="#979797"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/ticket_confirmation_fragment_user_name_textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/gotham"
+                    android:text="Md. Fuad Bin Rahman"
+                    android:drawablePadding="16dp"
+                    android:paddingTop="5dp"
+                    android:paddingLeft="35dp"
+                    android:textColor="#373737" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/gotham"
+                    android:text="Phone Number"
+                    android:drawableStart="@drawable/ic_local_phone_24"
+                    android:drawablePadding="10dp"
+                    android:textColor="#979797"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/ticket_confirmation_fragment_user_phn_no_textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/gotham"
+                    android:text="+8801XXXXXXXXX"
+                    android:drawablePadding="16dp"
+                    android:paddingTop="5dp"
+                    android:paddingLeft="35dp"
+                    android:textColor="#373737"/>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <!--   success massage     -->
+        <TextView
+            android:id="@+id/ticket_confirmation_fragment_success_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ticket_confirmation_ticket_info_container_cardview"
+            android:layout_marginVertical="50dp"
+            android:fontFamily="@font/print_clearly"
+            android:text="SUCCESSFUL"
+            android:textAlignment="center"
+            android:textColor="#3C3F41"
+            android:textSize="50sp"
+            android:textStyle="bold"
+            android:gravity="center_horizontal" />
+
+
+
+        <LinearLayout
+            android:id="@+id/ticket_confirmation_fragment_to_home_button"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginHorizontal="8dp"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/ticket_confirmation_page_to_home_bg_shape"
+            >
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_ticket_confirmation_page_to_home_24"/>
+        </LinearLayout>
+
+
+
+    </RelativeLayout>
 
 </FrameLayout>
