@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.purchase_ticket.bill_payment.BillPaymentFragment">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/eticketing_bg"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <!--    blue radious bg    -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:id="@+id/bill_payment_fragment_primary_clr_radious_bg"
+            android:layout_marginHorizontal="1dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:orientation="vertical"
+            android:layout_height="120dp"
+            android:scaleType="centerCrop"
+            android:background="@drawable/searched_bus_list_upper_shape"/>
+
+        <!--   from,to,date info    -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:orientation="vertical">
+
+            <!--                -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="1dp">
+
+                <LinearLayout
+                    android:id="@+id/seat_selection_fragment_from_to_linearLayout"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="30dp"
+                    android:orientation="horizontal"
+                    android:layout_below="@+id/select_your_bus_textView"
+                    android:weightSum="100">
+
+                    <TextView
+                        android:id="@+id/bill_payment_fragment_from_textView"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/gotham"
+                        android:text="Dhaka"
+                        android:textAlignment="center"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp"
+                        android:layout_weight="45"
+                        android:gravity="center_horizontal" />
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_baseline_arrow_right_alt_24"
+                        android:layout_weight="10"/>
+
+                    <TextView
+                        android:id="@+id/bill_payment_fragment_to_textView"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/gotham"
+                        android:text="Rajshahi"
+                        android:textAlignment="center"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp"
+                        android:layout_weight="45"
+                        android:gravity="center_horizontal" />
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/bill_payment_fragment_date_day_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/seat_selection_fragment_from_to_linearLayout"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/print_clearly"
+                    android:text="10th - Oct - 1998 | Tuesday"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    android:gravity="center_horizontal" />
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+        <!--   card view bus & seat info     -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-50dp"
+            android:layout_below="@+id/bill_payment_fragment_primary_clr_radious_bg"
+            android:id="@+id/bill_payment_bus_info_container"
+            app:cardCornerRadius="4dp"
+            app:cardUseCompatPadding="true"
+            android:layout_marginHorizontal="8dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            app:contentPadding="16dp"
+            tools:ignore="MissingConstraints">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="100">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="60"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/bill_payment_bus_info__time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/calibri"
+                        android:text="10:00PM - 07:30AM"
+                        android:textStyle="bold"
+                        android:textColor="#000000"
+                        />
+                    <TextView
+                        android:id="@+id/bill_payment_bus_info_company_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/calibri"
+                        android:text="Hanif Paribahon"
+                        android:textStyle="bold"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="4dp"
+                        android:textColor="#4b4b4b"
+                        />
+                    <TextView
+                        android:id="@+id/bill_payment_bus_info_ac_status"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/calibri"
+                        android:text=" Non A/C (2+2)"
+                        android:textColor="#8a8a8a"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="40"
+                    android:gravity="center"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/bill_payment_bus_info_total_fare"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/calibri"
+                        android:text="৳400.00"
+                        android:textAlignment="textEnd"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:textColor="#f5a622"
+                        android:gravity="end" />
+                    <TextView
+                        android:id="@+id/bill_payment_bus_info_selected_seat_number"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/calibri"
+                        android:text="24 Seats"
+                        android:textAlignment="textEnd"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="4dp"
+                        android:textColor="#89868C"
+                        android:gravity="end" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <!--    user name, phn no    -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/bill_payment_user_name_and_gender_input_container"
+            android:layout_below="@+id/bill_payment_bus_info_container"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="0dp"
+            app:cardCornerRadius="8dp"
+            app:cardUseCompatPadding="true"
+            app:contentPadding="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical">
+
+                <!--        Name        -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:textColorHint="#FF8A99AF">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/bill_payment_user_name"
+                        android:drawablePadding="16dp"
+                        android:drawableStart="@drawable/ic_user_circle_24"
+                        android:fontFamily="@font/calibri"
+                        android:hint="Name"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!--        gender        -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:gravity="right"
+                        android:fontFamily="@font/calibri"
+                        android:textColor="@android:color/black"
+                        android:textStyle="bold"
+                        android:paddingTop="2dp"
+                        android:paddingRight="10dp"
+                        android:textSize="20sp"/>
+
+
+                    <RadioGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/bill_payment_user_gender_radioGroup"
+                        android:orientation="horizontal"
+                        android:gravity="right"
+                        android:checkedButton="@+id/bill_payment_user_male_radio_button">
+
+                        <RadioButton
+                            android:id="@+id/bill_payment_user_male_radio_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingRight="8dp"
+                            app:buttonTint="@color/colorPrimary"
+                            android:text="Male"/>
+                        <RadioButton
+                            android:id="@+id/bill_payment_user_female_radio_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:buttonTint="@color/colorPrimary"
+                            android:text="Female"/>
+
+                    </RadioGroup>
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--        Phn no        -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/bill_payment_user_phn_no_input_container"
+            android:layout_below="@+id/bill_payment_user_name_and_gender_input_container"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="0dp"
+            app:cardCornerRadius="8dp"
+            app:cardUseCompatPadding="true"
+            app:contentPaddingLeft="16dp"
+            app:contentPaddingRight="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:textColorHint="#FF8A99AF">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/bill_payment_user_phn_no"
+                        android:drawablePadding="16dp"
+                        android:drawableStart="@drawable/ic_local_phone_24"
+                        android:fontFamily="@font/calibri"
+                        android:hint="Phone Number"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <!--   Bill pay button     -->
+        <Button
+            android:id="@+id/bill_payment_fragment_pay_bill_button"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:layout_marginHorizontal="8dp"
+            android:background="@drawable/button_shape"
+            android:fontFamily="@font/calibri"
+            android:text="Pay Bill"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            android:textColor="#ffffff"
+            android:textSize="18sp" />
+
+    </RelativeLayout>
+
+</FrameLayout>
