@@ -1,4 +1,4 @@
-package com.fbr161.buskoi.ui.purchase_ticket.seat_selection;
+package com.fbr161.buskoi.ui.purchase_ticket.view.seat_selection;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,19 +13,21 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fbr161.buskoi.R;
-
-import java.util.Arrays;
+import com.fbr161.buskoi.ui.purchase_ticket.backend.model.SeatCondition;
+//import com.fbr161.buskoi.ui.purchase_ticket.view.seat_selection.Seat_Selection_Fragment_Seat_Plan_RecycleView_Adapter;
 
 public class Seat_Selection_Fragment_Seat_Plan_RecycleView_Adapter extends RecyclerView.Adapter<Seat_Selection_Fragment_Seat_Plan_RecycleView_Adapter.Holder>{
 
-    boolean[][] bus_Seat_Plan;
+    SeatCondition seatCondition;
     boolean[][] user_selected_Seat;
+    boolean[][] bus_Seat_Plan;
     Context context;
     int seat_select_count = 0;
     int max_seat = 4;
 
-    public Seat_Selection_Fragment_Seat_Plan_RecycleView_Adapter(boolean[][] bus_Seat_Plan, Context context) {
-        this.bus_Seat_Plan = bus_Seat_Plan;
+    public Seat_Selection_Fragment_Seat_Plan_RecycleView_Adapter(SeatCondition seatCondition, Context context) {
+        this.seatCondition = seatCondition;
+        this.bus_Seat_Plan = seatCondition.getSeat_condition();
         this.context = context;
 
         user_selected_Seat = new boolean[bus_Seat_Plan.length][bus_Seat_Plan[0].length];

@@ -1,4 +1,4 @@
-package com.fbr161.buskoi.ui.purchase_ticket.ticket_confirmation;
+package com.fbr161.buskoi.ui.purchase_ticket.view.ticket_confirmation;
 
 import android.content.Context;
 import android.os.Bundle;

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.purchase_ticket.ticket_confirmation.TicketConfirmationFragment">
+    tools:context=".ui.purchase_ticket.view.ticket_confirmation.TicketConfirmationFragment">
 
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"

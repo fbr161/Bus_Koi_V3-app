@@ -4,6 +4,11 @@ android {
     compileSdkVersion 29
     buildToolsVersion "30.0.3"
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     defaultConfig {
         applicationId "com.fbr161.buskoi"
         minSdkVersion 26
@@ -50,5 +55,22 @@ dependencies {
     // For control over item selection of both touch and mouse driven selection
 
     //noinspection GradleCompatible
+
+    implementation 'com.android.volley:volley:1.1.1'
+
+    //viewModel
+    def lifecycle_version = "2.3.1"
+    def arch_version = "2.1.0"
+//    implementation "android.arch.lifecycle:extensions:$version"
+//    annotationProcessor "android.arch.lifecycle:compiler:$version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"
+    // LiveData
+    implementation "androidx.lifecycle:lifecycle-livedata:$lifecycle_version"
+    // Annotation processor
+    annotationProcessor "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
+
+    //retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.7.2'
+    implementation 'com.squareup.retrofit2:converter-gson:2.7.2'
 
 }

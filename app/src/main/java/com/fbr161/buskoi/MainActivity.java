@@ -1,20 +1,22 @@
 package com.fbr161.buskoi;
 
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Menu;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fbr161.buskoi.ui.home.HomeFragment;
-import com.fbr161.buskoi.ui.purchase_ticket.PurchaseTicketFragment;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.fbr161.buskoi.ui.purchase_ticket.backend.model.Bus;
+import com.fbr161.buskoi.ui.purchase_ticket.backend.repository.Repository_PurchaseTicket;
+import com.fbr161.buskoi.ui.purchase_ticket.backend.retrofit.API_PurchaseTicket;
+import com.fbr161.buskoi.ui.purchase_ticket.backend.retrofit.Retrofit_Instanse_PurchaseTicket;
+import com.fbr161.buskoi.ui.purchase_ticket.backend.viewmodel.ViewModel_PurchaseTicket;
+import com.fbr161.buskoi.ui.purchase_ticket.view.PurchaseTicketFragment;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 //import com.google.android.material.navigation.NavigationView;
 //import android.support.design.widget.NavigationView;
 
@@ -22,16 +24,25 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.view.GravityCompat;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 ////////////////
 import com.fbr161.buskoi.constant.Constant;
+
+import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+
+import static com.google.gson.reflect.TypeToken.get;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -45,6 +56,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //design
     private TextView user_name_txtView, user_phn_no_txtView;
 
+   // ViewModel_PurchaseTicket viewModel_PurchaseTicket;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +66,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle("Bus Koi");
+
+        //viewModel_PurchaseTicket = new ViewModelProvider(this).get(ViewModel_PurchaseTicket.class);
+
 
 //        FloatingActionButton fab = findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
@@ -135,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             case R.id.menu_ticket:
                 toolbar.setTitle("Purchase Ticket");
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragement_container, new PurchaseTicketFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragement_container, new PurchaseTicketFragment("","","")).commit();
                 break;
 
             case R.id.menu_emergency_contact_number:

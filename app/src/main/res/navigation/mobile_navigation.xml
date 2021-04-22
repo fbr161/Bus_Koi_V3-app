@@ -9,10 +9,12 @@
         android:id="@+id/nav_home"
         android:name="com.fbr161.buskoi.ui.home.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+
+    </fragment>
     <fragment
         android:id="@+id/nav_purchase_ticket"
-        android:name="com.fbr161.buskoi.ui.purchase_ticket.PurchaseTicketFragment"
+        android:name="com.fbr161.buskoi.ui.purchase_ticket.view.PurchaseTicketFragment"
         android:label="@string/menu_purchase_ticket"
         tools:layout="@layout/fragment_purchase_ticket" />
 

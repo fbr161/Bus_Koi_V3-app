@@ -8,7 +8,7 @@
     android:paddingHorizontal="15dp"
     android:paddingTop="15dp"
     android:orientation="vertical"
-    tools:context=".ui.purchase_ticket.PurchaseTicketFragment">
+    tools:context=".ui.purchase_ticket.view.PurchaseTicketFragment">
 
 
     <androidx.cardview.widget.CardView

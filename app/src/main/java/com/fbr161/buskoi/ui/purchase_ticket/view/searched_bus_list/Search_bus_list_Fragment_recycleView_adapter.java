@@ -1,30 +1,32 @@
-package com.fbr161.buskoi.ui.purchase_ticket.searched_bus_list;
+package com.fbr161.buskoi.ui.purchase_ticket.view.searched_bus_list;
 
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fbr161.buskoi.R;
-import com.fbr161.buskoi.clss.Bus;
-import com.fbr161.buskoi.ui.purchase_ticket.seat_selection.SeatSelectionFragment;
+import com.fbr161.buskoi.ui.purchase_ticket.backend.model.Bus;
+import com.fbr161.buskoi.ui.purchase_ticket.backend.viewmodel.ViewModel_PurchaseTicket;
+import com.fbr161.buskoi.ui.purchase_ticket.view.seat_selection.SeatSelectionFragment;
+
+import java.util.ArrayList;
 
 public class Search_bus_list_Fragment_recycleView_adapter extends RecyclerView.Adapter<Search_bus_list_Fragment_recycleView_adapter.Holder> {
 
-    Bus[] bus_lists;
+    ArrayList<Bus> bus_lists = new ArrayList<Bus>();
     Context context;
 
-    public Search_bus_list_Fragment_recycleView_adapter(Bus[] bus_lists, Context context) {
+    public Search_bus_list_Fragment_recycleView_adapter(ArrayList<Bus> bus_lists, Context context) {
         this.bus_lists = bus_lists;
         this.context = context;
     }
@@ -41,13 +43,16 @@ public class Search_bus_list_Fragment_recycleView_adapter extends RecyclerView.A
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int i) {
 
-        final String depr_time = bus_lists[i].getDepr_time();
-        final String company_name = bus_lists[i].getCompany_name();
-        final int available_seat = bus_lists[i].getAvailable_seat();
-        final double fare = bus_lists[i].getFare();
+        final String schedule_id = bus_lists.get(i).getSchedule_id();
+        final String depr_time = bus_lists.get(i).getDepr_time();
+        final String company_name = bus_lists.get(i).getCompany_name();
+        final int available_seat = bus_lists.get(i).getAvailable_seat();
+        final double fare = bus_lists.get(i).getFare();
         String ac_status = "";
 
-        if (bus_lists[i].getAcStatus()){
+        final int indx = i;
+
+        if (bus_lists.get(i).getAc_status()){
             ac_status = "A/C";
         }else { ac_status = "Non A/C";}
 
@@ -62,8 +67,14 @@ public class Search_bus_list_Fragment_recycleView_adapter extends RecyclerView.A
             @Override
             public void onClick(View view) {
 //                Toast.makeText(context, fare+"", Toast.LENGTH_SHORT).show();
+
+                Bundle arg = new Bundle();
+                arg.putString("schedule_id", schedule_id);
+                SeatSelectionFragment seatSelectionFragment = new SeatSelectionFragment();
+                seatSelectionFragment.setArguments(arg);
+
                 AppCompatActivity activity = (AppCompatActivity)view.getContext();
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragement_container, new SeatSelectionFragment()).addToBackStack(null).commit();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragement_container, seatSelectionFragment).addToBackStack(null).commit();
             }
         });
 
@@ -87,7 +98,7 @@ public class Search_bus_list_Fragment_recycleView_adapter extends RecyclerView.A
 
     @Override
     public int getItemCount() {
-        return bus_lists.length;
+        return bus_lists.size();
     }
 
     public class Holder extends RecyclerView.ViewHolder{

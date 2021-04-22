@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.purchase_ticket.seat_selection.SeatSelectionFragment">
+    tools:context=".ui.purchase_ticket.view.seat_selection.SeatSelectionFragment">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"

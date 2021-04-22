@@ -1,4 +1,4 @@
-package com.fbr161.buskoi.ui.purchase_ticket;
+package com.fbr161.buskoi.ui.purchase_ticket.view;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -6,7 +6,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -17,11 +16,11 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.fbr161.buskoi.R;
-import com.fbr161.buskoi.ui.purchase_ticket.location_picker.LocationPickerFragment;
-import com.fbr161.buskoi.ui.purchase_ticket.searched_bus_list.SearchedBusListFragment;
+import com.fbr161.buskoi.constant.Constant;
+import com.fbr161.buskoi.ui.purchase_ticket.view.location_picker.*;
+import com.fbr161.buskoi.ui.purchase_ticket.view.searched_bus_list.SearchedBusListFragment;
 
 import java.util.Date;
 import java.text.SimpleDateFormat;
@@ -39,12 +38,25 @@ public class PurchaseTicketFragment extends Fragment {
     TextView to_location_textView;
 //    Toolbar toolbar;
 
+    ////////
+    String from_location="";
+    String to_location = "";
+    String date = "";
+
     int day=0;
     int month=0;
     int year=0;
     String dayOfWeek;
-    private void assign_current_date_day(){
-        String date = java.time.LocalDate.now()+"";
+
+    public PurchaseTicketFragment(String from_location,  String to_location, String date){
+        this.from_location = from_location;
+        this.to_location = to_location;
+        this.date = date;
+    }
+
+
+    private void assign_values(){
+        date = java.time.LocalDate.now()+"";
         String[] date_split = date.split("-");
         day = Integer.parseInt(date_split[2]);
         month = Integer.parseInt(date_split[1]);
@@ -54,7 +66,19 @@ public class PurchaseTicketFragment extends Fragment {
         Date dt = new Date(year, month, day-3);
         dayOfWeek = simpledateformat.format(dt);
 
-        show_date_textView.setText(date);
+        //date
+        if(date.equals(""))
+            show_date_textView.setText(date);
+        else  show_date_textView.setText(this.date);
+
+        //from
+        if(!from_location.equals(""))
+            from_location_textView.setText(from_location);
+
+        //to
+        if(!to_location.equals(""))
+            to_location_textView.setText(to_location);
+
     }
 
     @Nullable
@@ -76,14 +100,15 @@ public class PurchaseTicketFragment extends Fragment {
 
 //        toolbar = view.findViewById(R.id.toolbar);
 //        toolbar.setTitle("Bus Koi");
-        assign_current_date_day();
+
+        assign_values();
 
         from_location_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.fragement_container, new LocationPickerFragment());
+                fragmentTransaction.replace(R.id.fragement_container, new LocationPickerFragment(from_location,to_location,date, Constant.LOCATION_PICKER_FROM));
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
 
@@ -96,7 +121,7 @@ public class PurchaseTicketFragment extends Fragment {
             public void onClick(View view) {
 
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.fragement_container, new LocationPickerFragment());
+                fragmentTransaction.replace(R.id.fragement_container, new LocationPickerFragment(from_location,to_location,date, Constant.LOCATION_PICKER_TO));
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
 
@@ -118,11 +143,12 @@ public class PurchaseTicketFragment extends Fragment {
                             public void onDateSet(DatePicker view, int _year, int monthOfYear, int dayOfMonth) {
 
                                 day=dayOfMonth; month=monthOfYear+1; year=_year;
-                                show_date_textView.setText(day + "-" + (month + 0) + "-" + year);
+                                date = year + "-" + (month + 0) + "-" + day;
+                                show_date_textView.setText(date);
 
                                 SimpleDateFormat simpledateformat = new SimpleDateFormat("EEEE");
-                                Date date = new Date(year, month, day-3);
-                                dayOfWeek = simpledateformat.format(date);
+                                Date datee = new Date(year, month, day-3);
+                                dayOfWeek = simpledateformat.format(datee);
                                 //Toast.makeText(context, dayOfWeek, Toast.LENGTH_SHORT).show();
 
                             }
@@ -139,7 +165,7 @@ public class PurchaseTicketFragment extends Fragment {
             public void onClick(View view) {
 
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.fragement_container, new SearchedBusListFragment());
+                fragmentTransaction.replace(R.id.fragement_container, new SearchedBusListFragment(from_location,to_location,date, dayOfWeek));
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
 

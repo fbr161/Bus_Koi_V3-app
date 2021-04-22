@@ -1,4 +1,4 @@
-package com.fbr161.buskoi.ui.purchase_ticket.location_picker;
+package com.fbr161.buskoi.ui.purchase_ticket.view.location_picker;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,7 +9,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import com.fbr161.buskoi.R;
-import com.fbr161.buskoi.ui.purchase_ticket.PurchaseTicketFragment;
+import com.fbr161.buskoi.constant.Constant;
+import com.fbr161.buskoi.ui.purchase_ticket.view.PurchaseTicketFragment;
+import com.fbr161.buskoi.ui.purchase_ticket.view.location_picker.Location_Picker_Fragment_Recycleview_Adapter;
 
 
 
@@ -18,9 +20,19 @@ public class Location_Picker_Fragment_Recycleview_Adapter extends RecyclerView.A
     String[] city_name;
     Context context;
 
-    public Location_Picker_Fragment_Recycleview_Adapter(String[] city_name, Context context) {
+    String from_location="";
+    String to_location = "";
+    String date = "";
+    String from_or_to = "";
+
+    public Location_Picker_Fragment_Recycleview_Adapter(String[] city_name, Context context, String from_location, String to_location, String date, String from_or_to) {
         this.city_name = city_name;
         this.context = context;
+
+        this.from_location = from_location;
+        this.to_location = to_location;
+        this.date = date;
+        this.from_or_to = from_or_to;
     }
 
     @NonNull
@@ -45,7 +57,11 @@ public class Location_Picker_Fragment_Recycleview_Adapter extends RecyclerView.A
             public void onClick(View view) {
 //                Toast.makeText(context, fare+"", Toast.LENGTH_SHORT).show();
                 AppCompatActivity activity = (AppCompatActivity)view.getContext();
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragement_container, new PurchaseTicketFragment()).addToBackStack(null).commit();
+
+                if(from_or_to.equals(Constant.LOCATION_PICKER_FROM))
+                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragement_container, new PurchaseTicketFragment(city,to_location,date)).commit();
+                if(from_or_to.equals(Constant.LOCATION_PICKER_TO))
+                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragement_container, new PurchaseTicketFragment(from_location,city,date)).commit();
             }
         });
 
