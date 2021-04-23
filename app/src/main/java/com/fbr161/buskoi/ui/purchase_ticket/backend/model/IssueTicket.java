@@ -15,7 +15,9 @@ public class IssueTicket {
     String company_name="";
     boolean ac_status;
     double fare=0;
-    String seat_no="";
+    double totalFare = 0;
+    int availableSeats = 0;
+    String selected_seat_no=" ";
 
     String user_phn_no="";
     String name="";
@@ -48,17 +50,15 @@ public class IssueTicket {
         return schedule_id;
     }
 
-    public void setSchedule_id(String schedule_id) {
-        this.schedule_id = schedule_id;
-    }
 
     //DepTime CompanyName AcStatus Fare SeatNo
-    public void setDepTime_CompanyName_AcStatus_Fare_SeatNo(String dep_time, String company_name, boolean ac_status, double fare, String seat_no){
+    public void setScheduleId_DepTime_CompanyName_AcStatus_Fare_AvailableSeats(String schedule_id, String dep_time, String company_name, boolean ac_status, double fare, int availableSeats){
+        this.schedule_id = schedule_id;
         this.dep_time = dep_time;
         this.company_name = company_name;
         this.ac_status = ac_status;
         this.fare = fare;
-        this.seat_no = seat_no;
+        this.availableSeats = availableSeats;
     }
 
     public HashMap<String, String> getDepTime_CompanyName_AcStatus_Fare_SeatNo(){
@@ -68,7 +68,8 @@ public class IssueTicket {
         hashMap.put("company_name",company_name);
         hashMap.put("ac_status",ac_status+"");
         hashMap.put("fare",fare+"");
-        hashMap.put("seat_no",seat_no);
+        hashMap.put("seat_no",selected_seat_no);
+        hashMap.put("totalFare",totalFare+"");
 
         return hashMap;
     }
@@ -99,5 +100,29 @@ public class IssueTicket {
         this.issued_by = issued_by;
     }
 
+    //fare
+    public double getEachTicketFare() {
+        return fare;
+    }
 
+    public void setTotalFare(double totalFare) {
+        this.totalFare = totalFare;
+    }
+
+    public void setSelectedSeat_no(String seat_no) {
+        this.selected_seat_no = seat_no;
+    }
+
+    public HashMap<String, String> getSelectedSeatNoAndTotalFare(){
+        HashMap<String, String> hashMap = new HashMap<String, String>();
+
+        hashMap.put("selected_seat_no",selected_seat_no);
+        hashMap.put("totalFare",""+totalFare);
+
+        return hashMap;
+    }
+
+    public String getSelected_seat_no() {
+        return selected_seat_no;
+    }
 }

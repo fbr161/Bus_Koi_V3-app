@@ -39,19 +39,31 @@ public class ViewModel_PurchaseTicket extends ViewModel {
         return busListLiveData;
     }
 
+    //fare
+    public void setTicketTotalFare(double fare) {
+        issueTicketMutableLiveData.getValue().setTotalFare(fare);
+    }
+
+    //set Selected Seat Numbers
+    public void setSelectedSeatNumbers(String seats) {
+        issueTicketMutableLiveData.getValue().setSelectedSeat_no(seats);
+    }
+
+    //
+    public double getEachTicketFare() {
+        return issueTicketMutableLiveData.getValue().getEachTicketFare();
+    }
+
     //get Bus by giving index
     public Bus getBus(int i) {
-        Log.d("wtffffff_ViewModel_PurchaseTicket", "getBus before if, size: "+busListLiveData.getValue().size() );
+        //Log.d("wtffffff_ViewModel_PurchaseTicket", "getBus before if, size: "+busListLiveData.getValue().size() );
         if(busListLiveData.getValue().size() > i) {
-            Log.d("wtffffff_ViewModel_PurchaseTicket", "getBus in if: "+busListLiveData.getValue().get(i).getSchedule_id());
+            //Log.d("wtffffff_ViewModel_PurchaseTicket", "getBus in if: "+busListLiveData.getValue().get(i).getSchedule_id());
             return (Bus) busListLiveData.getValue().get(i);
         }
         return null;
     }
     ////////////////
-    public void setSelected_bus_schedule_id(String schedule_id) {
-        issueTicketMutableLiveData.getValue().setSchedule_id(schedule_id);
-    }
 
     //From To Date DayName
     public void setFromToDateDayName(String from, String to, String date, String dayOfWeek){
@@ -63,35 +75,45 @@ public class ViewModel_PurchaseTicket extends ViewModel {
         //Log.d("wtffffff_ViewModel_PurchaseTicket", "setFromToDateDayName before init 2");
         issueTicketMutableLiveData.setValue(it);
         //Log.d("wtffffff_ViewModel_PurchaseTicket", "setFromToDateDayName after init");
+
     }
 
     public LiveData<HashMap<String, String>> getFromToDateDayName(){
-        //Log.d("wtffffff_ViewModel_PurchaseTicket", "getFromToDateDayName before value init");
         HashMap<String, String> value = issueTicketMutableLiveData.getValue().getFromToDateDayName();
-        //Log.d("wtffffff_ViewModel_PurchaseTicket", "getFromToDateDayName after value init");
         MutableLiveData<HashMap<String, String>> hashMapMutableLiveData = new MutableLiveData<>();
-        //Log.d("wtffffff_ViewModel_PurchaseTicket", "getFromToDateDayName after hashMapMutableLiveData init");
-        hashMapMutableLiveData.setValue(value);
-        //Log.d("wtffffff_ViewModel_PurchaseTicket", "getFromToDateDayName after hashMapMutableLiveData set value");
+        hashMapMutableLiveData.postValue(value);
+
+        selectedSeatNoAndTotalFareLiveData = new MutableLiveData<>();
 
         return (LiveData<HashMap<String, String>>) hashMapMutableLiveData;
     }
 
-    //DepTime CompanyName AcStatus Fare SeatNo
-    public void setDepTime_CompanyName_AcStatus_Fare_SeatNo(String dep_time, String company_name, boolean ac_status, double fare, String seat_no){
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+    MutableLiveData<HashMap<String, String>> selectedSeatNoAndTotalFareLiveData;
+    public LiveData<HashMap<String, String>> getSelectedSeatNoAndTotalFare(){
+        if(selectedSeatNoAndTotalFareLiveData==null) selectedSeatNoAndTotalFareLiveData = new MutableLiveData<>();
+        return selectedSeatNoAndTotalFareLiveData;
+    }
+    public void setSelectedSeatNoAndTotalFare(){
+        HashMap<String, String> hm = issueTicketMutableLiveData.getValue().getSelectedSeatNoAndTotalFare();
+        selectedSeatNoAndTotalFareLiveData.postValue(hm);
+    }
 
-        //Log.d("wtffffff_ViewModel_PurchaseTicket", "setFromToDateDayName before init");
+
+    //DepTime CompanyName AcStatus Fare SeatNo
+    public void setScheduleId_DepTime_CompanyName_AcStatus_Fare_AvailableSeats(String schedule_id, String dep_time, String company_name, boolean ac_status, double fare, int availableSeats){
+
+
         IssueTicket it = issueTicketMutableLiveData.getValue();
-        it.setDepTime_CompanyName_AcStatus_Fare_SeatNo(dep_time, company_name, ac_status, fare, seat_no);
-        issueTicketMutableLiveData.setValue(it);
-        //Log.d("wtffffff_ViewModel_PurchaseTicket", "setFromToDateDayName after init");
+        it.setScheduleId_DepTime_CompanyName_AcStatus_Fare_AvailableSeats(schedule_id, dep_time, company_name, ac_status, fare, availableSeats);
+        issueTicketMutableLiveData.postValue(it);
     }
 
     public LiveData<HashMap<String, String>> getDepTime_CompanyName_AcStatus_Fare_SeatNo(){
-        //Log.d("wtffffff_ViewModel_PurchaseTicket", "getFromToDateDayName before value init");
+
         HashMap<String, String> value = issueTicketMutableLiveData.getValue().getDepTime_CompanyName_AcStatus_Fare_SeatNo();
         MutableLiveData<HashMap<String, String>> hashMapMutableLiveData = new MutableLiveData<>();
-        hashMapMutableLiveData.setValue(value);
+        hashMapMutableLiveData.postValue(value);
         //Log.d("wtffffff_ViewModel_PurchaseTicket", "getFromToDateDayName after hashMapMutableLiveData set value");
 
         return (LiveData<HashMap<String, String>>) hashMapMutableLiveData;
@@ -103,7 +125,7 @@ public class ViewModel_PurchaseTicket extends ViewModel {
         //Log.d("wtffffff_ViewModel_PurchaseTicket", "setFromToDateDayName before init");
         IssueTicket it = issueTicketMutableLiveData.getValue();
         it.setUserPhnNo_Name_PhnNo( user_phn_no,  name,  phn_no);
-        issueTicketMutableLiveData.setValue(it);
+        issueTicketMutableLiveData.postValue(it);
         //Log.d("wtffffff_ViewModel_PurchaseTicket", "setFromToDateDayName after init");
     }
 
@@ -130,5 +152,10 @@ public class ViewModel_PurchaseTicket extends ViewModel {
         seatConditionLiveData = (MutableLiveData<SeatCondition>) repository_purchaseTicket.getSeatCondition(schedule_id);
 
         return seatConditionLiveData;
+    }
+
+
+    public IssueTicket getIssueTicketMutable() {
+        return issueTicketMutableLiveData.getValue();
     }
 }

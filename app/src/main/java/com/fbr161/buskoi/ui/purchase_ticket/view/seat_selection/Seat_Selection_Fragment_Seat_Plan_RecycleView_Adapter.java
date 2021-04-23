@@ -1,6 +1,7 @@
 package com.fbr161.buskoi.ui.purchase_ticket.view.seat_selection;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,15 +11,20 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fbr161.buskoi.R;
 import com.fbr161.buskoi.ui.purchase_ticket.backend.model.SeatCondition;
+import com.fbr161.buskoi.ui.purchase_ticket.backend.viewmodel.ViewModel_PurchaseTicket;
 
 import java.util.ArrayList;
 //import com.fbr161.buskoi.ui.purchase_ticket.view.seat_selection.Seat_Selection_Fragment_Seat_Plan_RecycleView_Adapter;
 
 public class Seat_Selection_Fragment_Seat_Plan_RecycleView_Adapter extends RecyclerView.Adapter<Seat_Selection_Fragment_Seat_Plan_RecycleView_Adapter.Holder>{
+
+    ViewModel_PurchaseTicket viewModel_purchaseTicket;
 
     SeatCondition seatCondition;
     private boolean[][] user_selected_Seat_boolArray;
@@ -28,13 +34,21 @@ public class Seat_Selection_Fragment_Seat_Plan_RecycleView_Adapter extends Recyc
     private int seat_select_count = 0;
     private final int max_seat = 4;
 
-    public Seat_Selection_Fragment_Seat_Plan_RecycleView_Adapter(SeatCondition seatCondition, Context context) {
+    private double totalFare = 0;
+    private double eachTicketFare;
+
+    public Seat_Selection_Fragment_Seat_Plan_RecycleView_Adapter(SeatCondition seatCondition, Context context, ViewModel_PurchaseTicket viewModel_purchaseTicket) {
         this.seatCondition = seatCondition;
         this.bus_Seat_Condition_Array = seatCondition.getSeat_condition();
         this.context = context;
         this.users_previously_booked_seats_array = getPreviously_booked_seats_in_boolArray(seatCondition.getUser_previous_booked_seat_record());
 
         user_selected_Seat_boolArray = bool2DLikeArrayInitialization(bus_Seat_Condition_Array, false);
+
+        this.viewModel_purchaseTicket = viewModel_purchaseTicket;
+        this.eachTicketFare = viewModel_purchaseTicket.getEachTicketFare();
+
+        Log.d("wtfffff", eachTicketFare+"");
     }
 
     public boolean[][] getUser_selected_Seat_boolArray() {
@@ -66,10 +80,28 @@ public class Seat_Selection_Fragment_Seat_Plan_RecycleView_Adapter extends Recyc
                 if(row > 10) continue;
                 arr[row][col] = true;
             }
-        }catch (Exception e){
-
-        }
+        }catch (Exception e){ }
         return arr;
+    }
+
+    public String getSeatNumbersInString(boolean[][] arr){
+        String seatsStr = "";
+        String s = "";
+
+        for(int i=0; i < arr.length; i++){
+            for(int j=0; j<arr[0].length; j++){
+                if(arr[i][j]){
+                    s = (i+1)+""+(char)(65+j);  // 'A' ASCII = 65
+                    if(seatsStr.equals("")){
+                        seatsStr+=s;
+                    }else seatsStr+=","+s;
+                }
+            }
+        }
+        if(seatsStr.equals(""))
+            seatsStr=" ";
+
+        return seatsStr;
     }
 
 
@@ -150,11 +182,24 @@ public class Seat_Selection_Fragment_Seat_Plan_RecycleView_Adapter extends Recyc
                         user_selected_Seat_boolArray[index][0] = true;
                         seat_select_count++;
                         hldr.seat_column_A.setBackground(ContextCompat.getDrawable(context, R.drawable.seat_shape_selected));
+
+                        totalFare+=eachTicketFare;
+                        viewModel_purchaseTicket.setTicketTotalFare(totalFare);     //setting total fare in viewModel
+                        viewModel_purchaseTicket.setSelectedSeatNumbers(getSeatNumbersInString(user_selected_Seat_boolArray));  //update seat no in viewModel
+                        viewModel_purchaseTicket.setSelectedSeatNoAndTotalFare();
+
                         //Toast.makeText(context, row+"A"+" selected", Toast.LENGTH_SHORT).show();
                     }else {
                         user_selected_Seat_boolArray[index][0] = false;
                         seat_select_count--;
                         hldr.seat_column_A.setBackground(ContextCompat.getDrawable(context, R.drawable.seat_shape_available));
+
+                        totalFare-=eachTicketFare;
+                        viewModel_purchaseTicket.setTicketTotalFare(totalFare);     //setting total fare in viewModel
+                        viewModel_purchaseTicket.setSelectedSeatNumbers(getSeatNumbersInString(user_selected_Seat_boolArray));  //update seat no in viewModel
+                        //Log.d("wtfffffff", (getSeatNumbersInString(user_selected_Seat_boolArray)==null)+", "+totalFare);
+                        viewModel_purchaseTicket.setSelectedSeatNoAndTotalFare();
+
                         //Toast.makeText(context, row+"A"+" unselected", Toast.LENGTH_SHORT).show();
                     }
                 }else Toast.makeText(context, row+"A"+" not available", Toast.LENGTH_SHORT).show();
@@ -175,15 +220,28 @@ public class Seat_Selection_Fragment_Seat_Plan_RecycleView_Adapter extends Recyc
                         user_selected_Seat_boolArray[index][1] = true;
                         seat_select_count++;
                         hldr.seat_column_B.setBackground(ContextCompat.getDrawable(context, R.drawable.seat_shape_selected));
+
+                        totalFare+=eachTicketFare;
+                        viewModel_purchaseTicket.setTicketTotalFare(totalFare);     //setting total fare in viewModel
+                        viewModel_purchaseTicket.setSelectedSeatNumbers(getSeatNumbersInString(user_selected_Seat_boolArray));  //update seat no in viewModel
+                        viewModel_purchaseTicket.setSelectedSeatNoAndTotalFare();
+
                         //Toast.makeText(context, row+"B"+" selected", Toast.LENGTH_SHORT).show();
                     }else {
                         user_selected_Seat_boolArray[index][1] = false;
                         seat_select_count--;
                         hldr.seat_column_B.setBackground(ContextCompat.getDrawable(context, R.drawable.seat_shape_available));
+
+                        totalFare-=eachTicketFare;
+                        viewModel_purchaseTicket.setTicketTotalFare(totalFare);     //setting total fare in viewModel
+                        viewModel_purchaseTicket.setSelectedSeatNumbers(getSeatNumbersInString(user_selected_Seat_boolArray));  //update seat no in viewModel
+                        viewModel_purchaseTicket.setSelectedSeatNoAndTotalFare();
+
                         //Toast.makeText(context, row+"B"+" unselected", Toast.LENGTH_SHORT).show();
                     }
                 }else Toast.makeText(context, row+"B"+" not available", Toast.LENGTH_SHORT).show();
 
+                //Log.d("wtfffff_adapter", viewModel_purchaseTicket.getSelected_seat_no());
             }
         });
 
@@ -200,11 +258,23 @@ public class Seat_Selection_Fragment_Seat_Plan_RecycleView_Adapter extends Recyc
                         user_selected_Seat_boolArray[index][2] = true;
                         seat_select_count++;
                         hldr.seat_column_C.setBackground(ContextCompat.getDrawable(context, R.drawable.seat_shape_selected));
+
+                        totalFare+=eachTicketFare;
+                        viewModel_purchaseTicket.setTicketTotalFare(totalFare);     //setting total fare in viewModel
+                        viewModel_purchaseTicket.setSelectedSeatNumbers(getSeatNumbersInString(user_selected_Seat_boolArray));  //update seat no in viewModel
+                        viewModel_purchaseTicket.setSelectedSeatNoAndTotalFare();
+
                         //Toast.makeText(context, row+"C"+" selected", Toast.LENGTH_SHORT).show();
                     }else {
                         user_selected_Seat_boolArray[index][2] = false;
                         seat_select_count--;
                         hldr.seat_column_C.setBackground(ContextCompat.getDrawable(context, R.drawable.seat_shape_available));
+
+                        totalFare-=eachTicketFare;
+                        viewModel_purchaseTicket.setTicketTotalFare(totalFare);     //setting total fare in viewModel
+                        viewModel_purchaseTicket.setSelectedSeatNumbers(getSeatNumbersInString(user_selected_Seat_boolArray));  //update seat no in viewModel
+                        viewModel_purchaseTicket.setSelectedSeatNoAndTotalFare();
+
                         //Toast.makeText(context, row+"C"+" unselected", Toast.LENGTH_SHORT).show();
                     }
                 }else Toast.makeText(context, row+"C"+" not available", Toast.LENGTH_SHORT).show();
@@ -225,11 +295,23 @@ public class Seat_Selection_Fragment_Seat_Plan_RecycleView_Adapter extends Recyc
                         user_selected_Seat_boolArray[index][3] = true;
                         seat_select_count++;
                         hldr.seat_column_D.setBackground(ContextCompat.getDrawable(context, R.drawable.seat_shape_selected));
+
+                        totalFare+=eachTicketFare;
+                        viewModel_purchaseTicket.setTicketTotalFare(totalFare);     //setting total fare in viewModel
+                        viewModel_purchaseTicket.setSelectedSeatNumbers(getSeatNumbersInString(user_selected_Seat_boolArray));  //update seat no in viewModel
+                        viewModel_purchaseTicket.setSelectedSeatNoAndTotalFare();
+
                         //Toast.makeText(context, row+"D"+" selected", Toast.LENGTH_SHORT).show();
                     }else {
                         user_selected_Seat_boolArray[index][3] = false;
                         seat_select_count--;
                         hldr.seat_column_D.setBackground(ContextCompat.getDrawable(context, R.drawable.seat_shape_available));
+
+                        totalFare-=eachTicketFare;
+                        viewModel_purchaseTicket.setTicketTotalFare(totalFare);     //setting total fare in viewModel
+                        viewModel_purchaseTicket.setSelectedSeatNumbers(getSeatNumbersInString(user_selected_Seat_boolArray));  //update seat no in viewModel
+                        viewModel_purchaseTicket.setSelectedSeatNoAndTotalFare();
+
                         //Toast.makeText(context, row+"D"+" unselected", Toast.LENGTH_SHORT).show();
                     }
                 }else Toast.makeText(context, row+"D"+" not available", Toast.LENGTH_SHORT).show();

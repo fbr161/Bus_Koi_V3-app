@@ -37,7 +37,7 @@ public class Repository_PurchaseTicket {
             public void onResponse(Call<ArrayList<Bus>> call, Response<ArrayList<Bus>> response) {
 
                 //ArrayList<Bus> bus_array = response.body();
-                busList.setValue(response.body());
+                busList.postValue(response.body());
             }
 
             @Override
@@ -57,7 +57,7 @@ public class Repository_PurchaseTicket {
         api.getSeatCondition(schedule_id).enqueue(new Callback<SeatCondition>() {
             @Override
             public void onResponse(Call<SeatCondition> call, Response<SeatCondition> response) {
-                seatCondition.setValue(response.body());
+                seatCondition.postValue(response.body());
             }
 
             @Override

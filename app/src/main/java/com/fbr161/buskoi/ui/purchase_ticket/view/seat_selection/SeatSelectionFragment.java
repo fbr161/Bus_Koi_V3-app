@@ -28,6 +28,8 @@ import com.fbr161.buskoi.ui.purchase_ticket.backend.model.SeatCondition;
 import com.fbr161.buskoi.ui.purchase_ticket.backend.viewmodel.ViewModel_PurchaseTicket;
 import com.fbr161.buskoi.ui.purchase_ticket.view.bill_payment.BillPaymentFragment;
 
+import java.util.HashMap;
+
 
 public class SeatSelectionFragment extends Fragment {
 
@@ -39,7 +41,6 @@ public class SeatSelectionFragment extends Fragment {
 
     ViewModel_PurchaseTicket viewModel_PurchaseTicket;
 
-    String schedule_id="";
     Bus bus_info;
     String selected_seat_string="";
 
@@ -69,8 +70,8 @@ public class SeatSelectionFragment extends Fragment {
         available_seat_textView = view.findViewById(R.id.seat_selection_bus_info_available_seat);
         ac_status_textView = view.findViewById(R.id.seat_selection_bus_info_ac_status);
 
-        //Log.d("wtfffff", "oncreateView");
-
+        //ViewModel init
+        viewModel_PurchaseTicket = ViewModelProviders.of(requireActivity()).get(ViewModel_PurchaseTicket.class);
 
         recyclerView = view.findViewById(R.id.seat_selection_fragment_recycleview);
         recyclerView.setHasFixedSize(true);
@@ -88,56 +89,94 @@ public class SeatSelectionFragment extends Fragment {
         });
 
 
-
         return view;
     }
     /////////////////////////
+
+    String schedule_id = "";
+    boolean ac_status = false;
+    String depr_time = "";
+    String company_name = "";
+
+    double eachTicketfare = 0;
+    double totalFare = 0;
+
+    int available_seat = 0;
+    String selected_seat_no = "";
 
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        //Log.d("wtffffff_fragment_seat_selection", "onActivityCreated created");
+
         if(getArguments()!=null){
-            //Log.d("wtffffff_fragment_seat_selection", "onActivityCreated if pass");
+
             int i = getArguments().getInt("index");
-            //Log.d("wtffffff_fragment_seat_selection", "onActivityCreated i init: "+i);
-            ////Log.d("wtffffff", schedule_id);
-            viewModel_PurchaseTicket = ViewModelProviders.of(requireActivity()).get(ViewModel_PurchaseTicket.class);
-            //Log.d("wtffffff_fragment_seat_selection", "onActivityCreated bus_info init");
+
+
             bus_info = viewModel_PurchaseTicket.getBus(i);
-            //Log.d("wtffffff_fragment_seat_selection", "onActivityCreated bus_info init after");
-            String ac_status = "";
-            if(bus_info.getAc_status())
-                ac_status = "A/C";
-            else ac_status = "Non A/C";
-            //Log.d("wtffffff_fragment_seat_selection", "dept_time_textView "+ bus_info.getDepr_time());
-            dept_time_textView.setText(bus_info.getDepr_time());
 
-            //Log.d("wtffffff_fragment_seat_selection", "company_name_textView "+ bus_info.getCompany_name());
-            company_name_textView.setText(bus_info.getCompany_name());
+            schedule_id = bus_info.getSchedule_id();
+            depr_time = bus_info.getDepr_time();
+            company_name = bus_info.getCompany_name();
+            ac_status = bus_info.getAc_status();
+            eachTicketfare = bus_info.getFare();
+            available_seat = bus_info.getAvailable_seat();
 
-            //Log.d("wtffffff_fragment_seat_selection", "ac_status_textView "+ ac_status);
-            ac_status_textView.setText(ac_status);
+            String acStatusStr = "";
+            if(ac_status)
+                acStatusStr = "A/C";
+            else acStatusStr = "Non A/C";
 
-            //Log.d("wtffffff_fragment_seat_selection", "fare_textView "+ bus_info.getFare());
-            fare_textView.setText("৳"+bus_info.getFare());
+            dept_time_textView.setText(depr_time);
+            company_name_textView.setText(company_name);
+            ac_status_textView.setText(acStatusStr);
+            fare_textView.setText("৳ 0");
+            available_seat_textView.setText(available_seat+" seats");
 
-            //Log.d("wtffffff_fragment_seat_selection", "available_seat_textView "+ bus_info.getAvailable_seat());
-            available_seat_textView.setText(bus_info.getAvailable_seat()+"");
-
-
-            //Log.d("wtffffff_fragment_seat_selection", "onActivityCreated viewModel_PurchaseTicket.getBus finish, schdl id: "+bus_info.getSchedule_id());
+            viewModel_PurchaseTicket.setScheduleId_DepTime_CompanyName_AcStatus_Fare_AvailableSeats(schedule_id, depr_time, company_name, ac_status, eachTicketfare, available_seat);
 
             //viewModel_PurchaseTicket.setSelected_bus_schedule_id(schedule_id);
             viewModel_PurchaseTicket.getSeatConditionLiveData(bus_info.getSchedule_id()).observe(getViewLifecycleOwner(), new Observer<SeatCondition>() {
                 @Override
                 public void onChanged(SeatCondition seatCondition) {
 
-                    //Log.d("wtffffff_fragment_seat_selection", "viewModel_PurchaseTicket.getSeatConditionLiveData end: "+seatCondition.getSchedule_id());
-                    recyclerView.setAdapter(new Seat_Selection_Fragment_Seat_Plan_RecycleView_Adapter(seatCondition, context));
+                    recyclerView.setAdapter(new Seat_Selection_Fragment_Seat_Plan_RecycleView_Adapter(seatCondition, context, viewModel_PurchaseTicket));
                 }
             });
+
+            viewModel_PurchaseTicket.getFromToDateDayName().observe(getViewLifecycleOwner(), new Observer<HashMap<String, String>>() {
+
+                @Override
+                public void onChanged(HashMap<String, String> stringStringHashMap) {
+
+                    //Log.d("wtfffffff", stringStringHashMap.get("from"));
+                    frm_textView.setText(stringStringHashMap.get("from"));
+                    to_textView.setText(stringStringHashMap.get("to"));
+                    date_day_textView.setText(stringStringHashMap.get("date")+"  |  "+stringStringHashMap.get("dayOfWeek"));
+
+                }
+            });
+
+            viewModel_PurchaseTicket.getSelectedSeatNoAndTotalFare().observe(getViewLifecycleOwner(), new Observer<HashMap<String, String>>() {
+
+                @Override
+                public void onChanged(HashMap<String, String> stringStringHashMap) {
+
+                    selected_seat_no = stringStringHashMap.get("selected_seat_no");
+                    totalFare = Double.parseDouble(stringStringHashMap.get("totalFare"));
+
+                    if(selected_seat_no.equals("")){
+                        available_seat_textView.setText(available_seat);
+                        fare_textView.setText("৳ 0");
+                    }else {
+                        available_seat_textView.setText(selected_seat_no);
+                        fare_textView.setText("৳ "+totalFare);
+                    }
+                }
+            });
+
+
         }
 
     }
