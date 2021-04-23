@@ -14,31 +14,63 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.fbr161.buskoi.R;
 import com.fbr161.buskoi.ui.purchase_ticket.backend.model.SeatCondition;
+
+import java.util.ArrayList;
 //import com.fbr161.buskoi.ui.purchase_ticket.view.seat_selection.Seat_Selection_Fragment_Seat_Plan_RecycleView_Adapter;
 
 public class Seat_Selection_Fragment_Seat_Plan_RecycleView_Adapter extends RecyclerView.Adapter<Seat_Selection_Fragment_Seat_Plan_RecycleView_Adapter.Holder>{
 
     SeatCondition seatCondition;
-    boolean[][] user_selected_Seat;
-    boolean[][] bus_Seat_Plan;
-    Context context;
-    int seat_select_count = 0;
-    int max_seat = 4;
+    private boolean[][] user_selected_Seat_boolArray;
+    private boolean[][] bus_Seat_Condition_Array;
+    private boolean[][] users_previously_booked_seats_array;
+    private Context context;
+    private int seat_select_count = 0;
+    private final int max_seat = 4;
 
     public Seat_Selection_Fragment_Seat_Plan_RecycleView_Adapter(SeatCondition seatCondition, Context context) {
         this.seatCondition = seatCondition;
-        this.bus_Seat_Plan = seatCondition.getSeat_condition();
+        this.bus_Seat_Condition_Array = seatCondition.getSeat_condition();
         this.context = context;
+        this.users_previously_booked_seats_array = getPreviously_booked_seats_in_boolArray(seatCondition.getUser_previous_booked_seat_record());
 
-        user_selected_Seat = new boolean[bus_Seat_Plan.length][bus_Seat_Plan[0].length];
-        //Arrays.fill(user_selected_Seat, false);
-        for (int i=0; i<bus_Seat_Plan.length; i++){
-            for (int j=0; j<bus_Seat_Plan[0].length; j++){
-                user_selected_Seat[i][j] = false;
-            }
-        }
+        user_selected_Seat_boolArray = bool2DLikeArrayInitialization(bus_Seat_Condition_Array, false);
     }
 
+    public boolean[][] getUser_selected_Seat_boolArray() {
+        return user_selected_Seat_boolArray;
+    }
+
+    private boolean[][] bool2DLikeArrayInitialization(boolean[][] likeArray, boolean value){
+        boolean[][] arr = new boolean[likeArray.length][likeArray[0].length];
+        
+        for (int i=0; i<likeArray.length; i++){
+            for (int j=0; j<likeArray[0].length; j++){
+                arr[i][j] = value;
+            }
+        }return arr;
+    }
+
+    private boolean[][] getPreviously_booked_seats_in_boolArray(String seats){
+
+        boolean[][] arr = bool2DLikeArrayInitialization(bus_Seat_Condition_Array, false);
+        String[] seat_split = seats.split(",");
+
+        ArrayList<int[]> previously_booked_seats = new ArrayList<int[]>();
+
+        try {
+            for (String seat_no:seat_split) {
+                int col = seat_no.substring(seat_no.length()-1).charAt(0) - 'A';
+                if(col > 4) continue;
+                int row = Integer.parseInt(seat_no.substring(0,seat_no.length()-1)) -1;
+                if(row > 10) continue;
+                arr[row][col] = true;
+            }
+        }catch (Exception e){
+
+        }
+        return arr;
+    }
 
 
     @NonNull
@@ -53,10 +85,16 @@ public class Seat_Selection_Fragment_Seat_Plan_RecycleView_Adapter extends Recyc
     @Override
     public void onBindViewHolder(@NonNull Seat_Selection_Fragment_Seat_Plan_RecycleView_Adapter.Holder holder, int i) {
 
-        final boolean seat_status_A = bus_Seat_Plan[i][0];
-        final boolean seat_status_B = bus_Seat_Plan[i][1];
-        final boolean seat_status_C = bus_Seat_Plan[i][2];
-        final boolean seat_status_D = bus_Seat_Plan[i][3];
+        final boolean seat_status_A = bus_Seat_Condition_Array[i][0];
+        final boolean seat_status_B = bus_Seat_Condition_Array[i][1];
+        final boolean seat_status_C = bus_Seat_Condition_Array[i][2];
+        final boolean seat_status_D = bus_Seat_Condition_Array[i][3];
+
+        final boolean previously_booked_seat_status_A = users_previously_booked_seats_array[i][0];
+        final boolean previously_booked_seat_status_B = users_previously_booked_seats_array[i][1];
+        final boolean previously_booked_seat_status_C = users_previously_booked_seats_array[i][2];
+        final boolean previously_booked_seat_status_D = users_previously_booked_seats_array[i][3];
+
         final String row = (i+1)+"";
         final int index = i;
         final Holder hldr = holder;
@@ -83,6 +121,20 @@ public class Seat_Selection_Fragment_Seat_Plan_RecycleView_Adapter extends Recyc
         else
             holder.seat_column_D.setBackground(ContextCompat.getDrawable(context, R.drawable.seat_shape_booked));
 
+        //users_previously_booked_seats
+        if (previously_booked_seat_status_A)
+            holder.seat_column_A.setBackground(ContextCompat.getDrawable(context, R.drawable.seat_shape_users_previously_booked));
+
+        if (previously_booked_seat_status_B)
+            holder.seat_column_B.setBackground(ContextCompat.getDrawable(context, R.drawable.seat_shape_users_previously_booked));
+
+        if (previously_booked_seat_status_C)
+            holder.seat_column_C.setBackground(ContextCompat.getDrawable(context, R.drawable.seat_shape_users_previously_booked));
+
+        if (previously_booked_seat_status_D)
+            holder.seat_column_D.setBackground(ContextCompat.getDrawable(context, R.drawable.seat_shape_users_previously_booked));
+
+
 
         holder.seat_column_A.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,20 +142,20 @@ public class Seat_Selection_Fragment_Seat_Plan_RecycleView_Adapter extends Recyc
 
                 if (seat_status_A){
 
-                    if (!user_selected_Seat[index][0]){             //checking seat is not selected
+                    if (!user_selected_Seat_boolArray[index][0]){             //checking seat is not selected
                         if (seat_select_count == max_seat){
                             Toast.makeText(context, "Maximum 4 seats", Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        user_selected_Seat[index][0] = true;
+                        user_selected_Seat_boolArray[index][0] = true;
                         seat_select_count++;
                         hldr.seat_column_A.setBackground(ContextCompat.getDrawable(context, R.drawable.seat_shape_selected));
-                        Toast.makeText(context, row+"A"+" selected", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(context, row+"A"+" selected", Toast.LENGTH_SHORT).show();
                     }else {
-                        user_selected_Seat[index][0] = false;
+                        user_selected_Seat_boolArray[index][0] = false;
                         seat_select_count--;
                         hldr.seat_column_A.setBackground(ContextCompat.getDrawable(context, R.drawable.seat_shape_available));
-                        Toast.makeText(context, row+"A"+" unselected", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(context, row+"A"+" unselected", Toast.LENGTH_SHORT).show();
                     }
                 }else Toast.makeText(context, row+"A"+" not available", Toast.LENGTH_SHORT).show();
 
@@ -115,20 +167,20 @@ public class Seat_Selection_Fragment_Seat_Plan_RecycleView_Adapter extends Recyc
             public void onClick(View view) {
 
                 if (seat_status_B){
-                    if (!user_selected_Seat[index][1]){
+                    if (!user_selected_Seat_boolArray[index][1]){
                         if (seat_select_count == max_seat){
                             Toast.makeText(context, "Maximum 4 seats", Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        user_selected_Seat[index][1] = true;
+                        user_selected_Seat_boolArray[index][1] = true;
                         seat_select_count++;
                         hldr.seat_column_B.setBackground(ContextCompat.getDrawable(context, R.drawable.seat_shape_selected));
-                        Toast.makeText(context, row+"B"+" selected", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(context, row+"B"+" selected", Toast.LENGTH_SHORT).show();
                     }else {
-                        user_selected_Seat[index][1] = false;
+                        user_selected_Seat_boolArray[index][1] = false;
                         seat_select_count--;
                         hldr.seat_column_B.setBackground(ContextCompat.getDrawable(context, R.drawable.seat_shape_available));
-                        Toast.makeText(context, row+"B"+" unselected", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(context, row+"B"+" unselected", Toast.LENGTH_SHORT).show();
                     }
                 }else Toast.makeText(context, row+"B"+" not available", Toast.LENGTH_SHORT).show();
 
@@ -140,20 +192,20 @@ public class Seat_Selection_Fragment_Seat_Plan_RecycleView_Adapter extends Recyc
             public void onClick(View view) {
 
                 if (seat_status_C){
-                    if (!user_selected_Seat[index][2]){
+                    if (!user_selected_Seat_boolArray[index][2]){
                         if (seat_select_count == max_seat){
                             Toast.makeText(context, "Maximum 4 seats", Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        user_selected_Seat[index][2] = true;
+                        user_selected_Seat_boolArray[index][2] = true;
                         seat_select_count++;
                         hldr.seat_column_C.setBackground(ContextCompat.getDrawable(context, R.drawable.seat_shape_selected));
-                        Toast.makeText(context, row+"C"+" selected", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(context, row+"C"+" selected", Toast.LENGTH_SHORT).show();
                     }else {
-                        user_selected_Seat[index][2] = false;
+                        user_selected_Seat_boolArray[index][2] = false;
                         seat_select_count--;
                         hldr.seat_column_C.setBackground(ContextCompat.getDrawable(context, R.drawable.seat_shape_available));
-                        Toast.makeText(context, row+"C"+" unselected", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(context, row+"C"+" unselected", Toast.LENGTH_SHORT).show();
                     }
                 }else Toast.makeText(context, row+"C"+" not available", Toast.LENGTH_SHORT).show();
 
@@ -165,20 +217,20 @@ public class Seat_Selection_Fragment_Seat_Plan_RecycleView_Adapter extends Recyc
             public void onClick(View view) {
 
                 if (seat_status_D){
-                    if (!user_selected_Seat[index][3]){
+                    if (!user_selected_Seat_boolArray[index][3]){
                         if (seat_select_count == max_seat){
                             Toast.makeText(context, "Maximum 4 seats", Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        user_selected_Seat[index][3] = true;
+                        user_selected_Seat_boolArray[index][3] = true;
                         seat_select_count++;
                         hldr.seat_column_D.setBackground(ContextCompat.getDrawable(context, R.drawable.seat_shape_selected));
-                        Toast.makeText(context, row+"D"+" selected", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(context, row+"D"+" selected", Toast.LENGTH_SHORT).show();
                     }else {
-                        user_selected_Seat[index][3] = false;
+                        user_selected_Seat_boolArray[index][3] = false;
                         seat_select_count--;
                         hldr.seat_column_D.setBackground(ContextCompat.getDrawable(context, R.drawable.seat_shape_available));
-                        Toast.makeText(context, row+"D"+" unselected", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(context, row+"D"+" unselected", Toast.LENGTH_SHORT).show();
                     }
                 }else Toast.makeText(context, row+"D"+" not available", Toast.LENGTH_SHORT).show();
 
@@ -190,7 +242,7 @@ public class Seat_Selection_Fragment_Seat_Plan_RecycleView_Adapter extends Recyc
 
     @Override
     public int getItemCount() {
-        return bus_Seat_Plan.length;
+        return bus_Seat_Condition_Array.length;
     }
 
     public class Holder extends RecyclerView.ViewHolder{

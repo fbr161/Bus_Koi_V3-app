@@ -8,7 +8,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProviders;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,18 +18,24 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fbr161.buskoi.R;
 import com.fbr161.buskoi.constant.Constant;
+import com.fbr161.buskoi.ui.purchase_ticket.backend.viewmodel.ViewModel_PurchaseTicket;
 import com.fbr161.buskoi.ui.purchase_ticket.view.location_picker.*;
 import com.fbr161.buskoi.ui.purchase_ticket.view.searched_bus_list.SearchedBusListFragment;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 
 public class PurchaseTicketFragment extends Fragment {
+
+    ViewModel_PurchaseTicket viewModel_PurchaseTicket;
 
     DatePickerDialog datePickerDialog;
     Button search_button;
@@ -43,9 +51,6 @@ public class PurchaseTicketFragment extends Fragment {
     String to_location = "";
     String date = "";
 
-    int day=0;
-    int month=0;
-    int year=0;
     String dayOfWeek;
 
     public PurchaseTicketFragment(String from_location,  String to_location, String date){
@@ -56,15 +61,15 @@ public class PurchaseTicketFragment extends Fragment {
 
 
     private void assign_values(){
-        date = java.time.LocalDate.now()+"";
-        String[] date_split = date.split("-");
-        day = Integer.parseInt(date_split[2]);
-        month = Integer.parseInt(date_split[1]);
-        year = Integer.parseInt(date_split[0]);
+        DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        date = formatter.format(new Date());
 
-        SimpleDateFormat simpledateformat = new SimpleDateFormat("EEEE");
-        Date dt = new Date(year, month, day-3);
-        dayOfWeek = simpledateformat.format(dt);
+        try {
+            Date dt = formatter.parse(date);
+            dayOfWeek =  new SimpleDateFormat("EEEE").format(dt);
+        }catch (ParseException e){
+            e.printStackTrace();
+        }
 
         //date
         if(date.equals(""))
@@ -142,13 +147,26 @@ public class PurchaseTicketFragment extends Fragment {
                             @Override
                             public void onDateSet(DatePicker view, int _year, int monthOfYear, int dayOfMonth) {
 
-                                day=dayOfMonth; month=monthOfYear+1; year=_year;
-                                date = year + "-" + (month + 0) + "-" + day;
-                                show_date_textView.setText(date);
+                                ////
+                                DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 
-                                SimpleDateFormat simpledateformat = new SimpleDateFormat("EEEE");
-                                Date datee = new Date(year, month, day-3);
-                                dayOfWeek = simpledateformat.format(datee);
+                                try {
+                                    Date picked_date = formatter.parse(dayOfMonth+"-"+(monthOfYear+1)+"-"+_year);
+                                    Date presentDate = formatter.parse(formatter.format(new Date()));
+
+                                    if(picked_date.compareTo(presentDate)<0){
+                                        Toast.makeText(context, "You can't select an old date for your Trip", Toast.LENGTH_SHORT).show();
+                                        return;
+                                    }
+                                    date = formatter.format(picked_date);
+                                    dayOfWeek =  new SimpleDateFormat("EEEE").format(picked_date);
+                                    show_date_textView.setText(date);
+                                }catch (ParseException e){
+                                    e.printStackTrace();
+                                }
+
+                                ////
+
                                 //Toast.makeText(context, dayOfWeek, Toast.LENGTH_SHORT).show();
 
                             }
@@ -164,15 +182,40 @@ public class PurchaseTicketFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
+                if(from_location_textView.getText().toString().equals(getString(R.string.from_location_name_textBox))) {
+                    //Log.d("wtfffff", "in if");
+                    Toast.makeText(context, "You must select the city from you want to travel", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                else if (to_location_textView.getText().toString().equals(getString(R.string.to_location_name_textBox))) {
+                    Toast.makeText(context, "You must select the destination city you want to travel", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.fragement_container, new SearchedBusListFragment(from_location,to_location,date, dayOfWeek));
+                fragmentTransaction.replace(R.id.fragement_container, new SearchedBusListFragment());
                 fragmentTransaction.addToBackStack(null);
+
+                //Log.d("wtffffff_fragment_PurchaseTicket", "search_button.setOnClickListener before viewModel_PurchaseTicket.setFromToDateDayName setvalue");
+                viewModel_PurchaseTicket.setFromToDateDayName(from_location, to_location, date, dayOfWeek);
+                //Log.d("wtffffff_fragment_PurchaseTicket", "search_button.setOnClickListener after viewModel_PurchaseTicket.setFromToDateDayName setvalue");
+
                 fragmentTransaction.commit();
 
             }
+
         });
 
         return view;
     }
 
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        //Log.d("wtffffff_fragment_PurchaseTicket", "onActivityCreated before viewModel_PurchaseTicket init");
+        viewModel_PurchaseTicket = ViewModelProviders.of(requireActivity()).get(ViewModel_PurchaseTicket.class);
+        //Log.d("wtffffff_fragment_PurchaseTicket", "onActivityCreated after viewModel_PurchaseTicket init");
+    }
 }

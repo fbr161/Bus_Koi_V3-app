@@ -60,7 +60,7 @@
                         android:id="@+id/purchase_ticket_from_location_textview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Enter City" />
+                        android:text="@string/from_location_name_textBox" />
 
                 </LinearLayout>
 
@@ -110,7 +110,7 @@
                         android:id="@+id/purchase_ticket_to_location_textview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Enter City" />
+                        android:text="@string/to_location_name_textBox" />
                 </LinearLayout>
 
                 <TextView

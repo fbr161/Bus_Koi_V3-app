@@ -4,6 +4,7 @@ public class SeatCondition {
 
     String schedule_id;
     private boolean[][] seat_condition;
+    private String user_previous_booked_seat_record;
 //    private boolean[][] seat = {{true, false, true, false },
 //                                {true, false, true, false },
 //                                {false, true, false, false },
@@ -16,9 +17,10 @@ public class SeatCondition {
 //                                {true, false, true, false }};
 
 
-    public SeatCondition(String schedule_id, boolean[][] seat_condition) {
+    public SeatCondition(String schedule_id, boolean[][] seat_condition, String user_previous_booked_seat_record) {
         this.schedule_id = schedule_id;
         this.seat_condition = seat_condition;
+        this.user_previous_booked_seat_record = user_previous_booked_seat_record;
     }
 
     public String getSchedule_id() {
@@ -27,5 +29,9 @@ public class SeatCondition {
 
     public boolean[][] getSeat_condition() {
         return seat_condition;
+    }
+
+    public String getUser_previous_booked_seat_record() {
+        return user_previous_booked_seat_record;
     }
 }

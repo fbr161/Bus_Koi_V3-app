@@ -35,7 +35,6 @@ public interface API_PurchaseTicket {
             @Field("name") String name,
             @Field("phn_no") String phn_no,
             @Field("seat_no") String seat_no,
-            @Field("issed_date_time") String issed_date_time,
             @Field("fare") double fare,
             @Field("issued_by") String issued_by
     );

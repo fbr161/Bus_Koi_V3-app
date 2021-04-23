@@ -59,7 +59,7 @@ public class Search_bus_list_Fragment_recycleView_adapter extends RecyclerView.A
 
         holder.dept_time_textView.setText(depr_time);
         holder.company_name_textView.setText(company_name);
-        holder.fare_textView.setText("৳ "+fare);
+        holder.fare_textView.setText("৳"+fare);
         holder.available_seat_textView.setText(available_seat+" seats");
         holder.ac_status_textView.setText(ac_status);
 
@@ -69,7 +69,7 @@ public class Search_bus_list_Fragment_recycleView_adapter extends RecyclerView.A
 //                Toast.makeText(context, fare+"", Toast.LENGTH_SHORT).show();
 
                 Bundle arg = new Bundle();
-                arg.putString("schedule_id", schedule_id);
+                arg.putInt("index", indx);
                 SeatSelectionFragment seatSelectionFragment = new SeatSelectionFragment();
                 seatSelectionFragment.setArguments(arg);
 

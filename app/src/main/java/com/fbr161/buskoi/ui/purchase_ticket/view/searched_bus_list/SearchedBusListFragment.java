@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
@@ -27,6 +28,7 @@ import com.fbr161.buskoi.ui.purchase_ticket.backend.model.Bus;
 import com.fbr161.buskoi.ui.purchase_ticket.backend.viewmodel.ViewModel_PurchaseTicket;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -44,14 +46,8 @@ public class SearchedBusListFragment extends Fragment {
     TextView frm_txtView;
     TextView to_txtView;
     TextView date_txtView;
-    ViewModel_PurchaseTicket viewModel_PurchaseTicket;
 
-    public SearchedBusListFragment(String from_location,  String to_location, String date, String dayOfWeek){
-        this.from_location = from_location;
-        this.to_location = to_location;
-        this.date = date;
-        this.dayOfWeek = dayOfWeek;
-    }
+    ViewModel_PurchaseTicket viewModel_PurchaseTicket;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
@@ -103,6 +99,22 @@ public class SearchedBusListFragment extends Fragment {
             }
         });
 
+        viewModel_PurchaseTicket.getFromToDateDayName().observe(getViewLifecycleOwner(), new Observer<HashMap<String, String>>() {
+
+            @Override
+            public void onChanged(HashMap<String, String> stringStringHashMap) {
+                //Log.d("wtffffff_Seached-_bus_list", "getFromToDateDayName");
+
+                from_location = stringStringHashMap.get("from");
+                to_location = stringStringHashMap.get("to");
+                date = stringStringHashMap.get("date");
+                dayOfWeek = stringStringHashMap.get("dayOfWeek");
+
+                frm_txtView.setText(from_location);
+                to_txtView.setText(to_location);
+                date_txtView.setText(date+"  |  "+dayOfWeek);
+            }
+        });
 
 
         //Log.d("wtf__SearchedBusListFragment", "onActivityCreated__after__viewModel_PurchaseTicket__observer");

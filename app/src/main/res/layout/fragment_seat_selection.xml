@@ -406,6 +406,7 @@
                     android:textColor="#ffffff"
                     android:textSize="18sp"
                     android:layout_marginHorizontal="8dp"
+                    android:clickable="false"
                     android:textStyle="bold"/>
 
             </LinearLayout>

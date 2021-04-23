@@ -31,7 +31,7 @@ public class Repository_PurchaseTicket {
     public LiveData<List<Bus>> getSearchedBusList(String frm, String to, String date) {
         final MutableLiveData<List<Bus>> busList = new MutableLiveData<>();
 
-        Log.d("wtf__Repository_PurchaseTicket__parameters", frm+", "+to+", "+date);   //"Dhaka","Rajshahi", "2021-04-20"
+        //Log.d("wtf__Repository_PurchaseTicket__parameters", frm+", "+to+", "+date);   //"Dhaka","Rajshahi", "2021-04-20"
         api.getSearchedBusList(frm, to, date).enqueue(new Callback<ArrayList<Bus>>() {
             @Override
             public void onResponse(Call<ArrayList<Bus>> call, Response<ArrayList<Bus>> response) {
@@ -62,7 +62,7 @@ public class Repository_PurchaseTicket {
 
             @Override
             public void onFailure(Call<SeatCondition> call, Throwable t) {
-                Log.d("wtfffffffff api seat condition", t.toString());
+                //Log.d("wtfffffffff api seat condition", t.toString());
             }
         });
         return seatCondition;
@@ -72,7 +72,7 @@ public class Repository_PurchaseTicket {
     public boolean purchaseTicket(String schedule_id, String user_phn_no, String name, String phn_no, String seat_no, String issued_date_time, double fare, String issued_by){
         final Boolean[] status =  {false};
 
-        api.purchaseTicket(schedule_id, user_phn_no, name, phn_no, seat_no, issued_date_time, fare, issued_by).enqueue(new Callback<Boolean>() {
+        api.purchaseTicket(schedule_id, user_phn_no, name, phn_no, seat_no, fare, issued_by).enqueue(new Callback<Boolean>() {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                 if(response.body()){
