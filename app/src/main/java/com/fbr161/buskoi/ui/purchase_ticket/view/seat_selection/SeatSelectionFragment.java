@@ -38,8 +38,6 @@ public class SeatSelectionFragment extends Fragment {
     RecyclerView recyclerView;
     Button continue_button;
 
-
-
     ViewModel_PurchaseTicket viewModel_PurchaseTicket;
 
     Bus bus_info;
@@ -118,34 +116,46 @@ public class SeatSelectionFragment extends Fragment {
 
     public void init() {
 
-        if(getArguments()!=null){
+//        if(getArguments()!=null){
+//            int i = getArguments().getInt("index");
 
-            int i = getArguments().getInt("index");
+//            bus_info = viewModel_PurchaseTicket.getBus(i);
+//
+//            schedule_id = bus_info.getSchedule_id();
+//            depr_time = bus_info.getDepr_time();
+//            company_name = bus_info.getCompany_name();
+//            ac_status = bus_info.getAc_status();
+//            eachTicketfare = bus_info.getFare();
+//            available_seat = bus_info.getAvailable_seat();
+//
+//            dept_time_textView.setText(depr_time);
+//            company_name_textView.setText(company_name);
+//            ac_status_textView.setText(acStatusStr);
 
-
-            bus_info = viewModel_PurchaseTicket.getBus(i);
-
-            schedule_id = bus_info.getSchedule_id();
-            depr_time = bus_info.getDepr_time();
-            company_name = bus_info.getCompany_name();
-            ac_status = bus_info.getAc_status();
-            eachTicketfare = bus_info.getFare();
-            available_seat = bus_info.getAvailable_seat();
-
-            String acStatusStr = "";
-            if(ac_status)
-                acStatusStr = "A/C";
-            else acStatusStr = "Non A/C";
-
-            dept_time_textView.setText(depr_time);
-            company_name_textView.setText(company_name);
-            ac_status_textView.setText(acStatusStr);
             fare_textView.setText("৳ 0");
             available_seat_textView.setText("No seat selected");
 
-            //viewModel_PurchaseTicket.setScheduleId_DepTime_CompanyName_AcStatus_Fare_AvailableSeats(schedule_id, depr_time, company_name, ac_status, eachTicketfare, available_seat);
+            viewModel_PurchaseTicket.getDepTime_CompanyName_AcStatus_Fare_SeatNo().observe(getViewLifecycleOwner(), new Observer<HashMap<String, String>>() {
+                @Override
+                public void onChanged(HashMap<String, String> stringStringHashMap) {
+                    depr_time = stringStringHashMap.get("dep_time");
+                    company_name = stringStringHashMap.get("company_name");
+                    ac_status = Boolean.parseBoolean(stringStringHashMap.get("ac_status"));
+                    selected_seat_no = stringStringHashMap.get("seat_no");
+                    totalFare = Double.parseDouble(stringStringHashMap.get("totalFare"));
 
-            //viewModel_PurchaseTicket.setSelected_bus_schedule_id(schedule_id);
+                    String acStatusStr = "";
+                    if(ac_status)
+                        acStatusStr = "A/C";
+                    else acStatusStr = "Non A/C";
+
+                    dept_time_textView.setText(depr_time);
+                    company_name_textView.setText(company_name);
+                    ac_status_textView.setText(acStatusStr);
+
+                }
+            });
+
 
             viewModel_PurchaseTicket.getFromToDateDayName().observe(getViewLifecycleOwner(), new Observer<HashMap<String, String>>() {
 
@@ -160,14 +170,14 @@ public class SeatSelectionFragment extends Fragment {
                 }
             });
 
-        }
+//        }
 
     }
 
 
     public void init2() {
 
-        viewModel_PurchaseTicket.getSeatConditionLiveData(bus_info.getSchedule_id()).observe(getViewLifecycleOwner(), new Observer<SeatCondition>() {
+        viewModel_PurchaseTicket.getSeatConditionLiveData(viewModel_PurchaseTicket.getIssueTicketMutable().getSchedule_id()).observe(getViewLifecycleOwner(), new Observer<SeatCondition>() {
             @Override
             public void onChanged(SeatCondition seatCondition) {
 

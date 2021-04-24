@@ -3,15 +3,20 @@ package com.fbr161.buskoi.constant;
 public class Constant {
 
     //SignUp & SignIn
-    public final static String  LOG_IN_SHARED_PREF = "logIn_shared_pref";
-    public final static String  SHARED_PREF_KEY___LOGIN_STATUS = "logIn_status";
-    public final static String  SHARED_PREF_KEY___PHONE_NO = "phn_no";
-    public final static String  SHARED_PREF_KEY___NAME = "name";
-    public final static String  SHARED_PREF_KEY___server = "server";
+
 
     //Location_picker
     public final static String  LOCATION_PICKER_FROM = "from";
     public final static String  LOCATION_PICKER_TO = "to";
+
+    public class SharedPreferences{
+        public final static String  USER_INFO_SHARED_PREF = "user_info_shared_pref";
+        public final static String  KEY___USER_PHONE_NO = "phn_no";
+        public final static String  KEY___USER_NAME = "name";
+        public final static String  KEY___USER_GENDER = "gender";
+
+    }
+
 
     public class Url{
 

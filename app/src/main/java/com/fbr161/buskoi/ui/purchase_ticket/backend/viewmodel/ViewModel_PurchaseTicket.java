@@ -68,14 +68,9 @@ public class ViewModel_PurchaseTicket extends ViewModel {
     //From To Date DayName
     public void setFromToDateDayName(String from, String to, String date, String dayOfWeek){
 
-        //Log.d("wtffffff_ViewModel_PurchaseTicket", "setFromToDateDayName before init");
         IssueTicket it = issueTicketMutableLiveData.getValue();
-        //Log.d("wtffffff_ViewModel_PurchaseTicket", "setFromToDateDayName before init 1");
         it.setFromToDateDayName(from,to, date, dayOfWeek);
-        //Log.d("wtffffff_ViewModel_PurchaseTicket", "setFromToDateDayName before init 2");
         issueTicketMutableLiveData.setValue(it);
-        //Log.d("wtffffff_ViewModel_PurchaseTicket", "setFromToDateDayName after init");
-
     }
 
     public LiveData<HashMap<String, String>> getFromToDateDayName(){
@@ -114,27 +109,23 @@ public class ViewModel_PurchaseTicket extends ViewModel {
         HashMap<String, String> value = issueTicketMutableLiveData.getValue().getDepTime_CompanyName_AcStatus_Fare_SeatNo();
         MutableLiveData<HashMap<String, String>> hashMapMutableLiveData = new MutableLiveData<>();
         hashMapMutableLiveData.postValue(value);
-        //Log.d("wtffffff_ViewModel_PurchaseTicket", "getFromToDateDayName after hashMapMutableLiveData set value");
 
         return (LiveData<HashMap<String, String>>) hashMapMutableLiveData;
     }
 
     //user_phn_no Name Phn_no
-    public void setUserPhnNo_Name_PhnNo(String user_phn_no, String name,  String phn_no){
+    public void setUserPhnNo_PassengerName_PassengerPhnNo(String user_phn_no, String passenger_name,  String passenger_phn_no, boolean passenger_gender){
 
-        //Log.d("wtffffff_ViewModel_PurchaseTicket", "setFromToDateDayName before init");
         IssueTicket it = issueTicketMutableLiveData.getValue();
-        it.setUserPhnNo_Name_PhnNo( user_phn_no,  name,  phn_no);
+        it.setUserPhnNo_PassengerName_PassengerPhnNo_PassengerGender( user_phn_no,  passenger_name,  passenger_phn_no, passenger_gender);
         issueTicketMutableLiveData.postValue(it);
-        //Log.d("wtffffff_ViewModel_PurchaseTicket", "setFromToDateDayName after init");
     }
 
     public LiveData<HashMap<String, String>> getUserPhnNo_Name_PhnNo(){
-        //Log.d("wtffffff_ViewModel_PurchaseTicket", "getFromToDateDayName before value init");
+
         HashMap<String, String> value = issueTicketMutableLiveData.getValue().getUserPhnNo_Name_PhnNo();
         MutableLiveData<HashMap<String, String>> hashMapMutableLiveData = new MutableLiveData<>();
         hashMapMutableLiveData.setValue(value);
-        //Log.d("wtffffff_ViewModel_PurchaseTicket", "getFromToDateDayName after hashMapMutableLiveData set value");
 
         return (LiveData<HashMap<String, String>>) hashMapMutableLiveData;
     }
@@ -154,8 +145,12 @@ public class ViewModel_PurchaseTicket extends ViewModel {
         return seatConditionLiveData;
     }
 
-
     public IssueTicket getIssueTicketMutable() {
         return issueTicketMutableLiveData.getValue();
+    }
+
+    public boolean purchaseTicket(String schedule_id, String passenger_phn, String passenger_name, boolean gender, String seat_no, double fare, String issued_by){
+
+        return repository_purchaseTicket.purchaseTicket(schedule_id, passenger_phn, passenger_name, gender, seat_no, fare, issued_by);
     }
 }

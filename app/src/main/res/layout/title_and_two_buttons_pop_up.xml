@@ -10,6 +10,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/title_textView"
         android:paddingLeft="25dp"
         android:paddingTop="20dp"
         android:paddingBottom="15dp"
@@ -26,7 +27,7 @@
         android:padding="20dp">
 
         <TextView
-            android:id="@+id/exit_yes_textVw"
+            android:id="@+id/left_textVw"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="5dp"
@@ -37,7 +38,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/exit_no_textVw"
+            android:id="@+id/right_textVw"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="5dp"

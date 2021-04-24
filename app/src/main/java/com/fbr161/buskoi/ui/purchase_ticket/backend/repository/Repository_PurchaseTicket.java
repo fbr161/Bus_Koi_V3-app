@@ -69,10 +69,10 @@ public class Repository_PurchaseTicket {
     }
 
     // purchase ticket
-    public boolean purchaseTicket(String schedule_id, String user_phn_no, String name, String phn_no, String seat_no, String issued_date_time, double fare, String issued_by){
+    public boolean purchaseTicket(String schedule_id, String passenger_phn, String passenger_name, boolean gender, String seat_no, double fare, String issued_by){
         final Boolean[] status =  {false};
 
-        api.purchaseTicket(schedule_id, user_phn_no, name, phn_no, seat_no, fare, issued_by).enqueue(new Callback<Boolean>() {
+        api.purchaseTicket(schedule_id, passenger_phn, passenger_name, gender, seat_no, fare, issued_by).enqueue(new Callback<Boolean>() {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                 if(response.body()){

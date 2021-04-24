@@ -31,9 +31,9 @@ public interface API_PurchaseTicket {
     @POST(Constant.Url.PURCHASE_TICKET_API )
     Call<Boolean> purchaseTicket(
             @Field("schedule_id") String schedule_id,
-            @Field("user_phn_no") String user_phn_no,
-            @Field("name") String name,
-            @Field("phn_no") String phn_no,
+            @Field("passenger_phn") String passenger_phn,
+            @Field("passenger_name") String passenger_name,
+            @Field("gender") boolean gender,
             @Field("seat_no") String seat_no,
             @Field("fare") double fare,
             @Field("issued_by") String issued_by

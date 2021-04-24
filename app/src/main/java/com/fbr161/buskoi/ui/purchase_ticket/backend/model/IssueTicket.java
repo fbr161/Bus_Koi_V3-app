@@ -22,6 +22,7 @@ public class IssueTicket {
     String user_phn_no="";
     String name="";
     String phn_no="";
+    boolean gender=true;
 
     String issued_by="";
 
@@ -77,11 +78,13 @@ public class IssueTicket {
         return hashMap;
     }
 
+
     //user_phn_no Name Phn_no
-    public void setUserPhnNo_Name_PhnNo(String user_phn_no, String name,  String phn_no){
+    public void setUserPhnNo_PassengerName_PassengerPhnNo_PassengerGender(String user_phn_no, String name,  String phn_no, boolean gender){
         this.user_phn_no = user_phn_no;
         this.name = name;
         this.phn_no = phn_no;
+        this.gender = gender;
     }
 
     public HashMap<String, String> getUserPhnNo_Name_PhnNo(){
@@ -132,4 +135,19 @@ public class IssueTicket {
     public String getSelected_seat_no() {
         return selected_seat_no;
     }
+
+    public HashMap<String, String> getPurchaseTicketParameters(){
+        HashMap<String, String> hashMap = new HashMap<String, String>();
+
+        hashMap.put("schedule_id",schedule_id);
+        hashMap.put("passenger_phn",""+phn_no);
+        hashMap.put("passenger_name",""+name);
+        hashMap.put("gender",""+gender);
+        hashMap.put("seat_no",""+selected_seat_no);
+        hashMap.put("fare",""+totalFare);
+        hashMap.put("issued_by",""+user_phn_no);
+
+        return hashMap;
+    }
+
 }

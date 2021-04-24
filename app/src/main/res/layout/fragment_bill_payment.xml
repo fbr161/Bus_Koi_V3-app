@@ -129,7 +129,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/bill_payment_bus_info__time"
+                        android:id="@+id/bill_payment_bus_info__time_textView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/calibri"
@@ -138,7 +138,7 @@
                         android:textColor="#000000"
                         />
                     <TextView
-                        android:id="@+id/bill_payment_bus_info_company_name"
+                        android:id="@+id/bill_payment_bus_info_company_name_textView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/calibri"
@@ -149,7 +149,7 @@
                         android:textColor="#4b4b4b"
                         />
                     <TextView
-                        android:id="@+id/bill_payment_bus_info_ac_status"
+                        android:id="@+id/bill_payment_bus_info_ac_status_textView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/calibri"
@@ -166,7 +166,7 @@
                     android:gravity="center"
                     android:orientation="vertical">
                     <TextView
-                        android:id="@+id/bill_payment_bus_info_total_fare"
+                        android:id="@+id/bill_payment_bus_info_total_fare_textView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/calibri"
@@ -177,7 +177,7 @@
                         android:textColor="#f5a622"
                         android:gravity="end" />
                     <TextView
-                        android:id="@+id/bill_payment_bus_info_selected_seat_number"
+                        android:id="@+id/bill_payment_bus_info_selected_seat_number_textView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/calibri"
@@ -223,7 +223,7 @@
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:id="@+id/bill_payment_user_name"
+                        android:id="@+id/bill_payment_passenger_name_editText"
                         android:drawablePadding="16dp"
                         android:drawableStart="@drawable/ic_user_circle_24"
                         android:fontFamily="@font/calibri"
@@ -256,20 +256,20 @@
                     <RadioGroup
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/bill_payment_user_gender_radioGroup"
+                        android:id="@+id/bill_payment_passenger_gender_radioGroup"
                         android:orientation="horizontal"
                         android:gravity="right"
-                        android:checkedButton="@+id/bill_payment_user_male_radio_button">
+                        android:checkedButton="@+id/bill_payment_passenger_male_radio_button">
 
                         <RadioButton
-                            android:id="@+id/bill_payment_user_male_radio_button"
+                            android:id="@+id/bill_payment_passenger_male_radio_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingRight="8dp"
                             app:buttonTint="@color/colorPrimary"
                             android:text="Male"/>
                         <RadioButton
-                            android:id="@+id/bill_payment_user_female_radio_button"
+                            android:id="@+id/bill_payment_passenger_female_radio_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             app:buttonTint="@color/colorPrimary"
@@ -312,12 +312,12 @@
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:id="@+id/bill_payment_user_phn_no"
+                        android:id="@+id/bill_payment_passenger_phn_no_editText"
                         android:drawablePadding="16dp"
                         android:drawableStart="@drawable/ic_local_phone_24"
                         android:fontFamily="@font/calibri"
                         android:hint="Phone Number"
-                        android:inputType="text"
+                        android:inputType="phone"
                         android:maxLines="1"
                         android:textColor="@android:color/black"
                         android:textSize="16sp" />

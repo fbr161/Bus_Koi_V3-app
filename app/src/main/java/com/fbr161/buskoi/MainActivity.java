@@ -1,20 +1,15 @@
 package com.fbr161.buskoi;
 
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fbr161.buskoi.ui.home.HomeFragment;
-import com.fbr161.buskoi.ui.purchase_ticket.backend.model.Bus;
-import com.fbr161.buskoi.ui.purchase_ticket.backend.repository.Repository_PurchaseTicket;
-import com.fbr161.buskoi.ui.purchase_ticket.backend.retrofit.API_PurchaseTicket;
-import com.fbr161.buskoi.ui.purchase_ticket.backend.retrofit.Retrofit_Instanse_PurchaseTicket;
-import com.fbr161.buskoi.ui.purchase_ticket.backend.viewmodel.ViewModel_PurchaseTicket;
 import com.fbr161.buskoi.ui.purchase_ticket.view.PurchaseTicketFragment;
 import com.google.android.material.navigation.NavigationView;
 //import com.google.android.material.navigation.NavigationView;
@@ -24,9 +19,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.view.GravityCompat;
-import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,13 +26,6 @@ import androidx.appcompat.widget.Toolbar;
 
 ////////////////
 import com.fbr161.buskoi.constant.Constant;
-
-import java.util.ArrayList;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
 import static com.google.gson.reflect.TypeToken.get;
 
@@ -81,9 +66,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         /////////////////////////Shared preference
-        SharedPreferences sign_in_pref = getSharedPreferences(Constant.LOG_IN_SHARED_PREF, MODE_PRIVATE);
-        user_name = sign_in_pref.getString(Constant.SHARED_PREF_KEY___NAME, "");
-        user_phn_no = sign_in_pref.getString(Constant.SHARED_PREF_KEY___PHONE_NO, "");
+        SharedPreferences user_info_pref = getApplicationContext().getSharedPreferences(Constant.SharedPreferences.USER_INFO_SHARED_PREF, MODE_PRIVATE); // 0 - for private mode
+        SharedPreferences.Editor user_info_pref_editor = user_info_pref.edit();
+
+        user_info_pref_editor.putString(Constant.SharedPreferences.KEY___USER_PHONE_NO, "01739703058");
+        user_info_pref_editor.putString(Constant.SharedPreferences.KEY___USER_NAME, "Md. Fuad Bin Rahman");
+        user_info_pref_editor.putBoolean(Constant.SharedPreferences.KEY___USER_GENDER, true);
+        user_info_pref_editor.commit();
+
+        //SharedPreferences user_info_pref = getApplicationContext().getSharedPreferences(Constant.SharedPreferences.USER_INFO_SHARED_PREF, MODE_PRIVATE);
+        user_name = user_info_pref.getString(Constant.SharedPreferences.KEY___USER_NAME, "");
+        user_phn_no = user_info_pref.getString(Constant.SharedPreferences.KEY___USER_PHONE_NO, "");
 
 
 
@@ -97,8 +90,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         View headerView = navigationView.getHeaderView(0);
         user_name_txtView = (TextView) headerView.findViewById(R.id.nav_header_user_name);
         user_phn_no_txtView = (TextView) headerView.findViewById(R.id.nav_header_user_phn_no);
-        user_name_txtView.setText(user_phn_no);
-        user_phn_no_txtView.setText("");
+        user_name_txtView.setText(user_name);
+        user_phn_no_txtView.setText(user_phn_no);
 
 
         ActionBarDrawerToggle toggle= new ActionBarDrawerToggle(this, drawer, toolbar,
@@ -191,25 +184,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             super.onBackPressed();
         }
         else{
-            exit_pop_up();
+            exit_pop_up(this, "Exit?","Yes", "No");
         }
     }
 
     ////////////////
 
-    public void exit_pop_up(){
+    public void exit_pop_up(Context context, String title, String leftButtonText, String rightButtonText){
 
-        AlertDialog.Builder mBldr=new AlertDialog.Builder(MainActivity.this);
-        View mView = getLayoutInflater().inflate(R.layout.exit_pop_up,null);
+        AlertDialog.Builder mBldr=new AlertDialog.Builder(context);
+        View mView = getLayoutInflater().inflate(R.layout.title_and_two_buttons_pop_up,null);
+
+        TextView left_bttn = (TextView) mView.findViewById(R.id.left_textVw);
+        TextView right_bttn = (TextView) mView.findViewById(R.id.right_textVw);
+        TextView title_textView = mView.findViewById(R.id.title_textView);
+
+        left_bttn.setText(leftButtonText);
+        right_bttn.setText(rightButtonText);
+        title_textView.setText(title);
 
         mBldr.setView(mView);
         final AlertDialog dialog= mBldr.create();
         dialog.show();
 
-        TextView exit_yes_bttn = (TextView) mView.findViewById(R.id.exit_yes_textVw);
-        TextView exit_no_bttn = (TextView) mView.findViewById(R.id.exit_no_textVw);
 
-        exit_yes_bttn.setOnClickListener(new View.OnClickListener() {
+
+        left_bttn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
@@ -217,7 +217,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-        exit_no_bttn.setOnClickListener(new View.OnClickListener() {
+        right_bttn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
