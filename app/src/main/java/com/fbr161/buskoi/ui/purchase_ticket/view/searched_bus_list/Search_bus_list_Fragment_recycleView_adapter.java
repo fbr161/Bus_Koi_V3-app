@@ -25,10 +25,12 @@ public class Search_bus_list_Fragment_recycleView_adapter extends RecyclerView.A
 
     ArrayList<Bus> bus_lists = new ArrayList<Bus>();
     Context context;
+    ViewModel_PurchaseTicket viewModel_PurchaseTicket;
 
-    public Search_bus_list_Fragment_recycleView_adapter(ArrayList<Bus> bus_lists, Context context) {
+    public Search_bus_list_Fragment_recycleView_adapter(ArrayList<Bus> bus_lists, Context context, ViewModel_PurchaseTicket viewModel_PurchaseTicket) {
         this.bus_lists = bus_lists;
         this.context = context;
+        this.viewModel_PurchaseTicket = viewModel_PurchaseTicket;
     }
 
     @NonNull
@@ -52,10 +54,10 @@ public class Search_bus_list_Fragment_recycleView_adapter extends RecyclerView.A
 
         final int indx = i;
 
-        if (bus_lists.get(i).getAc_status()){
+        boolean ac_status_boolean = bus_lists.get(i).getAc_status();
+        if (ac_status_boolean){
             ac_status = "A/C";
         }else { ac_status = "Non A/C";}
-
 
         holder.dept_time_textView.setText(depr_time);
         holder.company_name_textView.setText(company_name);
@@ -72,6 +74,8 @@ public class Search_bus_list_Fragment_recycleView_adapter extends RecyclerView.A
                 arg.putInt("index", indx);
                 SeatSelectionFragment seatSelectionFragment = new SeatSelectionFragment();
                 seatSelectionFragment.setArguments(arg);
+
+                viewModel_PurchaseTicket.setScheduleId_DepTime_CompanyName_AcStatus_Fare_AvailableSeats(schedule_id, depr_time, company_name, ac_status_boolean, fare, available_seat);
 
                 AppCompatActivity activity = (AppCompatActivity)view.getContext();
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragement_container, seatSelectionFragment).addToBackStack(null).commit();

@@ -77,7 +77,7 @@ public class SearchedBusListFragment extends Fragment {
 //                new Bus("05:00 PM", "Elit", 2, 500, false)
 //        };
 
-        recyclerView.setAdapter(new Search_bus_list_Fragment_recycleView_adapter(bus_list_a, context));
+        recyclerView.setAdapter(new Search_bus_list_Fragment_recycleView_adapter(bus_list_a, context, viewModel_PurchaseTicket));
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager( new LinearLayoutManager(context));
 
@@ -95,7 +95,7 @@ public class SearchedBusListFragment extends Fragment {
         viewModel_PurchaseTicket.getSearchedBusListLiveData(from_location, to_location, date).observe(getViewLifecycleOwner(), new Observer<List<Bus>>() {
             @Override
             public void onChanged(List<Bus> buses) {
-                recyclerView.setAdapter(new Search_bus_list_Fragment_recycleView_adapter((ArrayList<Bus>)buses, context));
+                recyclerView.setAdapter(new Search_bus_list_Fragment_recycleView_adapter((ArrayList<Bus>)buses, context, viewModel_PurchaseTicket));
             }
         });
 

@@ -34,7 +34,7 @@ public class Seat_Selection_Fragment_Seat_Plan_RecycleView_Adapter extends Recyc
     private int seat_select_count = 0;
     private final int max_seat = 4;
 
-    private double totalFare = 0;
+    private double totalFare;
     private double eachTicketFare;
 
     public Seat_Selection_Fragment_Seat_Plan_RecycleView_Adapter(SeatCondition seatCondition, Context context, ViewModel_PurchaseTicket viewModel_purchaseTicket) {
@@ -43,12 +43,13 @@ public class Seat_Selection_Fragment_Seat_Plan_RecycleView_Adapter extends Recyc
         this.context = context;
         this.users_previously_booked_seats_array = getPreviously_booked_seats_in_boolArray(seatCondition.getUser_previous_booked_seat_record());
 
-        user_selected_Seat_boolArray = bool2DLikeArrayInitialization(bus_Seat_Condition_Array, false);
+        user_selected_Seat_boolArray = getPreviously_booked_seats_in_boolArray(viewModel_purchaseTicket.getIssueTicketMutable().getSelected_seat_no());
+        totalFare = viewModel_purchaseTicket.getIssueTicketMutable().getTotalFare();
 
         this.viewModel_purchaseTicket = viewModel_purchaseTicket;
         this.eachTicketFare = viewModel_purchaseTicket.getEachTicketFare();
 
-        Log.d("wtfffff", eachTicketFare+"");
+        //Log.d("wtfffff", eachTicketFare+"");
     }
 
     public boolean[][] getUser_selected_Seat_boolArray() {
@@ -127,6 +128,11 @@ public class Seat_Selection_Fragment_Seat_Plan_RecycleView_Adapter extends Recyc
         final boolean previously_booked_seat_status_C = users_previously_booked_seats_array[i][2];
         final boolean previously_booked_seat_status_D = users_previously_booked_seats_array[i][3];
 
+        final boolean previously_selected_seat_status_A = user_selected_Seat_boolArray[i][0];
+        final boolean previously_selected_seat_status_B = user_selected_Seat_boolArray[i][1];
+        final boolean previously_selected_seat_status_C = user_selected_Seat_boolArray[i][2];
+        final boolean previously_selected_seat_status_D = user_selected_Seat_boolArray[i][3];
+
         final String row = (i+1)+"";
         final int index = i;
         final Holder hldr = holder;
@@ -166,7 +172,18 @@ public class Seat_Selection_Fragment_Seat_Plan_RecycleView_Adapter extends Recyc
         if (previously_booked_seat_status_D)
             holder.seat_column_D.setBackground(ContextCompat.getDrawable(context, R.drawable.seat_shape_users_previously_booked));
 
+        //setSelectedSeatColor
+        if (previously_selected_seat_status_A)
+            holder.seat_column_A.setBackground(ContextCompat.getDrawable(context, R.drawable.seat_shape_selected));
 
+        if (previously_selected_seat_status_B)
+            holder.seat_column_B.setBackground(ContextCompat.getDrawable(context, R.drawable.seat_shape_selected));
+
+        if (previously_selected_seat_status_C)
+            holder.seat_column_C.setBackground(ContextCompat.getDrawable(context, R.drawable.seat_shape_selected));
+
+        if (previously_selected_seat_status_D)
+            holder.seat_column_D.setBackground(ContextCompat.getDrawable(context, R.drawable.seat_shape_selected));
 
         holder.seat_column_A.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -321,6 +338,8 @@ public class Seat_Selection_Fragment_Seat_Plan_RecycleView_Adapter extends Recyc
 
 
     }
+
+
 
     @Override
     public int getItemCount() {

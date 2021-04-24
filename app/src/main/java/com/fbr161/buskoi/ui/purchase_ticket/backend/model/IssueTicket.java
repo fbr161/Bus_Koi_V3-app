@@ -14,7 +14,7 @@ public class IssueTicket {
     String dep_time="";
     String company_name="";
     boolean ac_status;
-    double fare=0;
+    double eachTicketFare=0;
     double totalFare = 0;
     int availableSeats = 0;
     String selected_seat_no=" ";
@@ -52,13 +52,16 @@ public class IssueTicket {
 
 
     //DepTime CompanyName AcStatus Fare SeatNo
-    public void setScheduleId_DepTime_CompanyName_AcStatus_Fare_AvailableSeats(String schedule_id, String dep_time, String company_name, boolean ac_status, double fare, int availableSeats){
+    public void setScheduleId_DepTime_CompanyName_AcStatus_Fare_AvailableSeats(String schedule_id, String dep_time, String company_name, boolean ac_status, double eachTicketFare, int availableSeats){
         this.schedule_id = schedule_id;
         this.dep_time = dep_time;
         this.company_name = company_name;
         this.ac_status = ac_status;
-        this.fare = fare;
+        this.eachTicketFare = eachTicketFare;
         this.availableSeats = availableSeats;
+
+        this.selected_seat_no = " ";
+        this.totalFare = 0;
     }
 
     public HashMap<String, String> getDepTime_CompanyName_AcStatus_Fare_SeatNo(){
@@ -67,7 +70,7 @@ public class IssueTicket {
         hashMap.put("dep_time",dep_time);
         hashMap.put("company_name",company_name);
         hashMap.put("ac_status",ac_status+"");
-        hashMap.put("fare",fare+"");
+        hashMap.put("eachTicketFare",eachTicketFare+"");
         hashMap.put("seat_no",selected_seat_no);
         hashMap.put("totalFare",totalFare+"");
 
@@ -100,9 +103,9 @@ public class IssueTicket {
         this.issued_by = issued_by;
     }
 
-    //fare
+    //eachTicketFare
     public double getEachTicketFare() {
-        return fare;
+        return eachTicketFare;
     }
 
     public void setTotalFare(double totalFare) {
@@ -120,6 +123,10 @@ public class IssueTicket {
         hashMap.put("totalFare",""+totalFare);
 
         return hashMap;
+    }
+
+    public double getTotalFare() {
+        return totalFare;
     }
 
     public String getSelected_seat_no() {

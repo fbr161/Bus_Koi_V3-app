@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.fbr161.buskoi.R;
@@ -77,10 +78,20 @@ public class SeatSelectionFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager( new LinearLayoutManager(context));
 
+        //Log.d("wtffffff","onCreate");
+        init();
+        init2();
 
         continue_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Log.d("wtfffff", totalFare+"");
+                if((int)totalFare==0) {
+                    Toast.makeText(context, "Select at least one seat", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.fragement_container, new BillPaymentFragment());
                 fragmentTransaction.addToBackStack(null);
@@ -105,9 +116,7 @@ public class SeatSelectionFragment extends Fragment {
     String selected_seat_no = "";
 
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void init() {
 
         if(getArguments()!=null){
 
@@ -132,18 +141,11 @@ public class SeatSelectionFragment extends Fragment {
             company_name_textView.setText(company_name);
             ac_status_textView.setText(acStatusStr);
             fare_textView.setText("৳ 0");
-            available_seat_textView.setText(available_seat+" seats");
+            available_seat_textView.setText("No seat selected");
 
-            viewModel_PurchaseTicket.setScheduleId_DepTime_CompanyName_AcStatus_Fare_AvailableSeats(schedule_id, depr_time, company_name, ac_status, eachTicketfare, available_seat);
+            //viewModel_PurchaseTicket.setScheduleId_DepTime_CompanyName_AcStatus_Fare_AvailableSeats(schedule_id, depr_time, company_name, ac_status, eachTicketfare, available_seat);
 
             //viewModel_PurchaseTicket.setSelected_bus_schedule_id(schedule_id);
-            viewModel_PurchaseTicket.getSeatConditionLiveData(bus_info.getSchedule_id()).observe(getViewLifecycleOwner(), new Observer<SeatCondition>() {
-                @Override
-                public void onChanged(SeatCondition seatCondition) {
-
-                    recyclerView.setAdapter(new Seat_Selection_Fragment_Seat_Plan_RecycleView_Adapter(seatCondition, context, viewModel_PurchaseTicket));
-                }
-            });
 
             viewModel_PurchaseTicket.getFromToDateDayName().observe(getViewLifecycleOwner(), new Observer<HashMap<String, String>>() {
 
@@ -158,26 +160,38 @@ public class SeatSelectionFragment extends Fragment {
                 }
             });
 
-            viewModel_PurchaseTicket.getSelectedSeatNoAndTotalFare().observe(getViewLifecycleOwner(), new Observer<HashMap<String, String>>() {
-
-                @Override
-                public void onChanged(HashMap<String, String> stringStringHashMap) {
-
-                    selected_seat_no = stringStringHashMap.get("selected_seat_no");
-                    totalFare = Double.parseDouble(stringStringHashMap.get("totalFare"));
-
-                    if(selected_seat_no.equals("")){
-                        available_seat_textView.setText(available_seat);
-                        fare_textView.setText("৳ 0");
-                    }else {
-                        available_seat_textView.setText(selected_seat_no);
-                        fare_textView.setText("৳ "+totalFare);
-                    }
-                }
-            });
-
-
         }
+
+    }
+
+
+    public void init2() {
+
+        viewModel_PurchaseTicket.getSeatConditionLiveData(bus_info.getSchedule_id()).observe(getViewLifecycleOwner(), new Observer<SeatCondition>() {
+            @Override
+            public void onChanged(SeatCondition seatCondition) {
+
+                recyclerView.setAdapter(new Seat_Selection_Fragment_Seat_Plan_RecycleView_Adapter(seatCondition, context, viewModel_PurchaseTicket));
+            }
+        });
+
+        viewModel_PurchaseTicket.getSelectedSeatNoAndTotalFare().observe(getViewLifecycleOwner(), new Observer<HashMap<String, String>>() {
+
+            @Override
+            public void onChanged(HashMap<String, String> stringStringHashMap) {
+
+                selected_seat_no = stringStringHashMap.get("selected_seat_no");
+                totalFare = Double.parseDouble(stringStringHashMap.get("totalFare"));
+
+                if(selected_seat_no.equals(" ")){
+                    available_seat_textView.setText("No seat selected");
+                    fare_textView.setText("৳ 0");
+                }else {
+                    available_seat_textView.setText(selected_seat_no);
+                    fare_textView.setText("৳ " + totalFare);
+                }
+            }
+        });
 
     }
 }

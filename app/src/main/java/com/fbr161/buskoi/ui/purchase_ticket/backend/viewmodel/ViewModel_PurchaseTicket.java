@@ -83,8 +83,6 @@ public class ViewModel_PurchaseTicket extends ViewModel {
         MutableLiveData<HashMap<String, String>> hashMapMutableLiveData = new MutableLiveData<>();
         hashMapMutableLiveData.postValue(value);
 
-        selectedSeatNoAndTotalFareLiveData = new MutableLiveData<>();
-
         return (LiveData<HashMap<String, String>>) hashMapMutableLiveData;
     }
 
@@ -100,9 +98,11 @@ public class ViewModel_PurchaseTicket extends ViewModel {
     }
 
 
+
     //DepTime CompanyName AcStatus Fare SeatNo
     public void setScheduleId_DepTime_CompanyName_AcStatus_Fare_AvailableSeats(String schedule_id, String dep_time, String company_name, boolean ac_status, double fare, int availableSeats){
 
+        selectedSeatNoAndTotalFareLiveData = new MutableLiveData<>();
 
         IssueTicket it = issueTicketMutableLiveData.getValue();
         it.setScheduleId_DepTime_CompanyName_AcStatus_Fare_AvailableSeats(schedule_id, dep_time, company_name, ac_status, fare, availableSeats);
