@@ -78,7 +78,7 @@ public class Search_bus_list_Fragment_recycleView_adapter extends RecyclerView.A
                 viewModel_PurchaseTicket.setScheduleId_DepTime_CompanyName_AcStatus_Fare_AvailableSeats(schedule_id, depr_time, company_name, ac_status_boolean, fare, available_seat);
 
                 AppCompatActivity activity = (AppCompatActivity)view.getContext();
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragement_container, seatSelectionFragment).addToBackStack(null).commit();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragement_container, seatSelectionFragment).addToBackStack(context.getString(R.string.eTicketing_fragment_backStack_name)).commit();
             }
         });
 

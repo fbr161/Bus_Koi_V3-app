@@ -4,6 +4,7 @@ package com.fbr161.buskoi;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -181,9 +182,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             drawer.closeDrawer(GravityCompat.START);
         }
         else if(getSupportFragmentManager().getBackStackEntryCount()>0) {
+            //if()
             super.onBackPressed();
         }
         else{
+            //Log.d("wtfffff", )
             exit_pop_up(this, "Exit?","Yes", "No");
         }
     }

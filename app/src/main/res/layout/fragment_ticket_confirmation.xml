@@ -135,7 +135,7 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/ticket_confirmation_ticket_info_time"
+                            android:id="@+id/ticket_confirmation_ticket_info_time_textView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/calibri"
@@ -144,7 +144,7 @@
                             android:textColor="#000000"
                             />
                         <TextView
-                            android:id="@+id/ticket_confirmation_ticket_info_company_name"
+                            android:id="@+id/ticket_confirmation_ticket_info_company_name_textView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/calibri"
@@ -155,7 +155,7 @@
                             android:textColor="#4b4b4b"
                             />
                         <TextView
-                            android:id="@+id/ticket_confirmation_ticket_info_ac_status"
+                            android:id="@+id/ticket_confirmation_ticket_info_ac_status_textView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/calibri"
@@ -172,7 +172,7 @@
                         android:gravity="center"
                         android:orientation="vertical">
                         <TextView
-                            android:id="@+id/ticket_confirmation_ticket_info_total_fare"
+                            android:id="@+id/ticket_confirmation_ticket_info_total_fare_textView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/calibri"
@@ -183,7 +183,7 @@
                             android:textColor="#f5a622"
                             android:gravity="end" />
                         <TextView
-                            android:id="@+id/ticket_confirmation_ticket_info_selected_seat_number"
+                            android:id="@+id/ticket_confirmation_ticket_info_selected_seat_number_textView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/calibri"
@@ -216,7 +216,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/ticket_confirmation_fragment_user_name_textView"
+                    android:id="@+id/ticket_confirmation_fragment_passenger_name_textView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/gotham"
@@ -238,7 +238,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/ticket_confirmation_fragment_user_phn_no_textView"
+                    android:id="@+id/ticket_confirmation_fragment_passenger_phn_no_textView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/gotham"
@@ -254,7 +254,7 @@
 
         <!--   success massage     -->
         <TextView
-            android:id="@+id/ticket_confirmation_fragment_success_textview"
+            android:id="@+id/ticket_confirmation_fragment_purchase_status_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ticket_confirmation_ticket_info_container_cardview"

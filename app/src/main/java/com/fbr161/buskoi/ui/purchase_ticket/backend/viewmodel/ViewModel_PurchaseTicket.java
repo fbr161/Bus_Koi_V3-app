@@ -149,7 +149,8 @@ public class ViewModel_PurchaseTicket extends ViewModel {
         return issueTicketMutableLiveData.getValue();
     }
 
-    public boolean purchaseTicket(String schedule_id, String passenger_phn, String passenger_name, boolean gender, String seat_no, double fare, String issued_by){
+
+    public LiveData<Boolean> purchaseTicket(String schedule_id, String passenger_phn, String passenger_name, boolean gender, String seat_no, double fare, String issued_by){
 
         return repository_purchaseTicket.purchaseTicket(schedule_id, passenger_phn, passenger_name, gender, seat_no, fare, issued_by);
     }

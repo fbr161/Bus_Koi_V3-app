@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,11 +29,13 @@ import com.fbr161.buskoi.MainActivity;
 import com.fbr161.buskoi.R;
 import com.fbr161.buskoi.constant.Constant;
 import com.fbr161.buskoi.ui.purchase_ticket.backend.viewmodel.ViewModel_PurchaseTicket;
+import com.fbr161.buskoi.ui.purchase_ticket.view.seat_selection.SeatSelectionFragment;
 import com.fbr161.buskoi.ui.purchase_ticket.view.ticket_confirmation.*;
 
 import java.util.HashMap;
 
 import static android.content.Context.MODE_PRIVATE;
+import static androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE;
 
 
 public class BillPaymentFragment extends Fragment {
@@ -64,6 +67,8 @@ public class BillPaymentFragment extends Fragment {
     String selected_seat_no = "";
 
     String user_phn_no = "";
+    String user_name = "";
+    boolean user_gender = true;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
@@ -89,7 +94,15 @@ public class BillPaymentFragment extends Fragment {
 
         /////////////////////////Shared preference
         SharedPreferences user_info_pref = context.getSharedPreferences(Constant.SharedPreferences.USER_INFO_SHARED_PREF, MODE_PRIVATE);
-        user_phn_no = user_info_pref.getString(Constant.SharedPreferences.KEY___USER_PHONE_NO, "anonymous");
+        user_phn_no = user_info_pref.getString(Constant.SharedPreferences.KEY___USER_PHONE_NO, "000000");
+        user_name = user_info_pref.getString(Constant.SharedPreferences.KEY___USER_NAME, "");
+        user_gender = user_info_pref.getBoolean(Constant.SharedPreferences.KEY___USER_GENDER, true);
+
+
+        passenger_name_editText.setText(user_name);
+        passenger_phnNo_editText.setText(user_phn_no);
+        if(!user_gender)
+            genderRadioGroup.check(R.id.bill_payment_passenger_female_radio_button);
 
         init();
 
@@ -115,14 +128,14 @@ public class BillPaymentFragment extends Fragment {
 
                 viewModel_PurchaseTicket.setUserPhnNo_PassengerName_PassengerPhnNo(user_phn_no, passengerName, passengerPhnNo, passenger_gender);
 
-                exit_pop_up(context, "Are you sure?", "Yes", "No");
+                pay_confirmation_pop_up(context, "Are you sure?", "Yes", "No");
             }
         });
 
         return view;
     }
     //confirmation popUp
-    public void exit_pop_up(Context context, String title, String leftButtonText, String rightButtonText){
+    public void pay_confirmation_pop_up(Context context, String title, String leftButtonText, String rightButtonText){
 
         AlertDialog.Builder mBldr=new AlertDialog.Builder(context);
         View mView = getLayoutInflater().inflate(R.layout.title_and_two_buttons_pop_up,null);
@@ -147,15 +160,20 @@ public class BillPaymentFragment extends Fragment {
 
                 HashMap<String,String> hashMap =  viewModel_PurchaseTicket.getIssueTicketMutable().getPurchaseTicketParameters();
 
+                boolean b;
+
                 viewModel_PurchaseTicket.purchaseTicket(hashMap.get("schedule_id"), hashMap.get("passenger_phn"), hashMap.get("passenger_name"),
                                                             Boolean.parseBoolean(hashMap.get("gender")), hashMap.get("seat_no"), Double.parseDouble(hashMap.get("fare")),
                                                             hashMap.get("issued_by"));
 
+
+                getFragmentManager().popBackStack(getString(R.string.eTicketing_fragment_backStack_name), POP_BACK_STACK_INCLUSIVE);
+                TicketConfirmationFragment ticketConfirmationFragment = new TicketConfirmationFragment();
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.fragement_container, new TicketConfirmationFragment());
-                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.replace(R.id.fragement_container, ticketConfirmationFragment);
                 fragmentTransaction.commit();
                 dialog.dismiss();
+
             }
         });
 
@@ -207,9 +225,6 @@ public class BillPaymentFragment extends Fragment {
             }
         });
 
-//        }
-
     }
-
 
 }

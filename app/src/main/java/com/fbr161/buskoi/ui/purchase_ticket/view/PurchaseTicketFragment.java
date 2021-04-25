@@ -114,7 +114,6 @@ public class PurchaseTicketFragment extends Fragment {
 
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.fragement_container, new LocationPickerFragment(from_location,to_location,date, Constant.LOCATION_PICKER_FROM));
-                fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
 
                 //Toast.makeText(context, "from location", Toast.LENGTH_SHORT).show();
@@ -127,7 +126,6 @@ public class PurchaseTicketFragment extends Fragment {
 
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.fragement_container, new LocationPickerFragment(from_location,to_location,date, Constant.LOCATION_PICKER_TO));
-                fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
 
                 //Toast.makeText(context, "to location", Toast.LENGTH_SHORT).show();
@@ -195,7 +193,7 @@ public class PurchaseTicketFragment extends Fragment {
 
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.fragement_container, new SearchedBusListFragment());
-                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.addToBackStack(getString(R.string.eTicketing_fragment_backStack_name));
 
                 //Log.d("wtffffff_fragment_PurchaseTicket", "search_button.setOnClickListener before viewModel_PurchaseTicket.setFromToDateDayName setvalue");
                 viewModel_PurchaseTicket.setFromToDateDayName(from_location, to_location, date, dayOfWeek);

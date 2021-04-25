@@ -16,4 +16,7 @@
     <string name="from_location_name_textBox">Enter origin city</string>
     <string name="to_location_name_textBox">Enter destination city</string>
 
+    <!-- e-Ticketing fragment backStack name  -->
+    <string name="eTicketing_fragment_backStack_name">eTicketing_fragment_backStack</string>
+
 </resources>

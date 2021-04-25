@@ -97,10 +97,6 @@ public class IssueTicket {
         return hashMap;
     }
 
-    //Issued by
-    public String getIssued_by() {
-        return issued_by;
-    }
 
     public void setIssued_by(String issued_by) {
         this.issued_by = issued_by;

@@ -92,7 +92,7 @@ public class SeatSelectionFragment extends Fragment {
 
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.fragement_container, new BillPaymentFragment());
-                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.addToBackStack(getString(R.string.eTicketing_fragment_backStack_name));
                 fragmentTransaction.commit();
             }
         });

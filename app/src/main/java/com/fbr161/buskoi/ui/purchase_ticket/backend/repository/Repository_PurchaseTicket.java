@@ -69,22 +69,22 @@ public class Repository_PurchaseTicket {
     }
 
     // purchase ticket
-    public boolean purchaseTicket(String schedule_id, String passenger_phn, String passenger_name, boolean gender, String seat_no, double fare, String issued_by){
-        final Boolean[] status =  {false};
+    boolean purchaseTicketStatus;
+    public LiveData<Boolean> purchaseTicket(String schedule_id, String passenger_phn, String passenger_name, boolean gender, String seat_no, double fare, String issued_by){
+        purchaseTicketStatus =  false;
+        int gndr = gender ? 1 : 0;
 
-        api.purchaseTicket(schedule_id, passenger_phn, passenger_name, gender, seat_no, fare, issued_by).enqueue(new Callback<Boolean>() {
+        api.purchaseTicket(schedule_id, issued_by, passenger_phn, passenger_name, gndr, seat_no, fare, issued_by).enqueue(new Callback<Boolean>() {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                if(response.body()){
-                    status[0]=true;
-                }
+                purchaseTicketStatus = true;
             }
-
             @Override
             public void onFailure(Call<Boolean> call, Throwable t) {
-                Log.d("wtfffffffff api purchase ticket", t.toString());
             }
         });
-        return status[0];
+        MutableLiveData<Boolean> st = new MutableLiveData<Boolean>();
+        st.postValue(purchaseTicketStatus);
+        return st;
     }
 }

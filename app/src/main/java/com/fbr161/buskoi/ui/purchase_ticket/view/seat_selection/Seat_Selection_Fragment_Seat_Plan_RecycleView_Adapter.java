@@ -11,16 +11,11 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fbr161.buskoi.R;
 import com.fbr161.buskoi.ui.purchase_ticket.backend.model.SeatCondition;
 import com.fbr161.buskoi.ui.purchase_ticket.backend.viewmodel.ViewModel_PurchaseTicket;
-
-import java.util.ArrayList;
-//import com.fbr161.buskoi.ui.purchase_ticket.view.seat_selection.Seat_Selection_Fragment_Seat_Plan_RecycleView_Adapter;
 
 public class Seat_Selection_Fragment_Seat_Plan_RecycleView_Adapter extends RecyclerView.Adapter<Seat_Selection_Fragment_Seat_Plan_RecycleView_Adapter.Holder>{
 
@@ -31,30 +26,35 @@ public class Seat_Selection_Fragment_Seat_Plan_RecycleView_Adapter extends Recyc
     private boolean[][] bus_Seat_Condition_Array;
     private boolean[][] users_previously_booked_seats_array;
     private Context context;
-    private int seat_select_count = 0;
+    private int seat_select_count;
     private final int max_seat = 4;
 
     private double totalFare;
     private double eachTicketFare;
 
     public Seat_Selection_Fragment_Seat_Plan_RecycleView_Adapter(SeatCondition seatCondition, Context context, ViewModel_PurchaseTicket viewModel_purchaseTicket) {
+        String User_previous_booked_seat_record = seatCondition.getUser_previous_booked_seat_record();
+        String selected_seat_no = viewModel_purchaseTicket.getIssueTicketMutable().getSelected_seat_no();
+
         this.seatCondition = seatCondition;
         this.bus_Seat_Condition_Array = seatCondition.getSeat_condition();
         this.context = context;
-        this.users_previously_booked_seats_array = getPreviously_booked_seats_in_boolArray(seatCondition.getUser_previous_booked_seat_record());
+        this.users_previously_booked_seats_array = getPreviously_booked_seats_in_boolArray(User_previous_booked_seat_record);
 
-        user_selected_Seat_boolArray = getPreviously_booked_seats_in_boolArray(viewModel_purchaseTicket.getIssueTicketMutable().getSelected_seat_no());
+        user_selected_Seat_boolArray = getPreviously_booked_seats_in_boolArray(selected_seat_no);
         totalFare = viewModel_purchaseTicket.getIssueTicketMutable().getTotalFare();
 
         this.viewModel_purchaseTicket = viewModel_purchaseTicket;
         this.eachTicketFare = viewModel_purchaseTicket.getEachTicketFare();
 
-        //Log.d("wtfffff", eachTicketFare+"");
+
+        seat_select_count = User_previous_booked_seat_record.equals("") ? 0 : User_previous_booked_seat_record.split(",").length;
+        seat_select_count += selected_seat_no.equals(" ") ? 0 : selected_seat_no.split(",").length;
     }
 
-    public boolean[][] getUser_selected_Seat_boolArray() {
-        return user_selected_Seat_boolArray;
-    }
+//    public boolean[][] getUser_selected_Seat_boolArray() {
+//        return user_selected_Seat_boolArray;
+//    }
 
     private boolean[][] bool2DLikeArrayInitialization(boolean[][] likeArray, boolean value){
         boolean[][] arr = new boolean[likeArray.length][likeArray[0].length];
@@ -71,7 +71,6 @@ public class Seat_Selection_Fragment_Seat_Plan_RecycleView_Adapter extends Recyc
         boolean[][] arr = bool2DLikeArrayInitialization(bus_Seat_Condition_Array, false);
         String[] seat_split = seats.split(",");
 
-        ArrayList<int[]> previously_booked_seats = new ArrayList<int[]>();
 
         try {
             for (String seat_no:seat_split) {
