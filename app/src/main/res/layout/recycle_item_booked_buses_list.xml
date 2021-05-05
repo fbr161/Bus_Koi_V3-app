@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <!--    -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/booked_bus_list_recycleview_item_container"
+        app:cardCornerRadius="4dp"
+        app:cardUseCompatPadding="true"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:contentPadding="16dp"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="100">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="60"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/booked_bus_list_recycleview_item_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/calibri"
+                    android:text="10:00PM - 07:30AM"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
+                    />
+                <TextView
+                    android:id="@+id/booked_bus_list_recycleview_item_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/print_clearly"
+                    android:text="20-04-1995"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
+                    />
+                <TextView
+                    android:id="@+id/booked_bus_list_recycleview_item_company_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/calibri"
+                    android:text="Hanif Paribahon"
+                    android:textStyle="bold"
+                    android:textColor="#4b4b4b"
+                    />
+                <TextView
+                    android:id="@+id/booked_bus_list_recycleview_item_ac_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/calibri"
+                    android:text=" Non A/C"
+                    android:textColor="#8a8a8a"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="40"
+                android:gravity="center"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/booked_bus_list_recycleview_item_fare"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/calibri"
+                    android:text="৳400.00"
+                    android:textAlignment="textEnd"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:textColor="#f5a622"
+                    android:gravity="end" />
+                <TextView
+                    android:id="@+id/booked_bus_list_recycleview_item_seat_no"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/calibri"
+                    android:text="24 Seats"
+                    android:textAlignment="textEnd"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:gravity="end" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <!--    -->
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

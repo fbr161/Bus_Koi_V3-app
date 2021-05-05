@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.home.view.map.MapBusTrackingFragment">
+
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/eticketing_bg"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <!--    blue radious bg    -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:id="@+id/map_fragment_primary_clr_radious_bg"
+            android:layout_marginHorizontal="1dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:orientation="vertical"
+            android:layout_height="120dp"
+            android:scaleType="centerCrop"
+            android:background="@drawable/searched_bus_list_upper_shape"/>
+
+        <!--   from,to,date info    -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:orientation="vertical">
+
+            <!--                -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="1dp">
+
+                <LinearLayout
+                    android:id="@+id/map_fragment_from_to_container_linearLayout"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="30dp"
+                    android:orientation="horizontal"
+                    android:weightSum="100">
+
+                    <TextView
+                        android:id="@+id/map_fragment_from_textView"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/gotham"
+                        android:text="Dhaka"
+                        android:textAlignment="center"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp"
+                        android:layout_weight="45"
+                        android:gravity="center_horizontal" />
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_baseline_arrow_right_alt_24"
+                        android:layout_weight="10"/>
+
+                    <TextView
+                        android:id="@+id/map_fragment_to_textView"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/gotham"
+                        android:text="Rajshahi"
+                        android:textAlignment="center"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp"
+                        android:layout_weight="45"
+                        android:gravity="center_horizontal" />
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/map_fragment_date_day_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/map_fragment_from_to_container_linearLayout"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/print_clearly"
+                    android:text="10th - Oct - 1998 | Tuesday"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    android:gravity="center_horizontal" />
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+        <!--   card view bus info     -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-50dp"
+            android:layout_below="@+id/map_fragment_primary_clr_radious_bg"
+            android:id="@+id/map_fragment_bus_info_container"
+            app:cardCornerRadius="4dp"
+            app:cardUseCompatPadding="true"
+            android:layout_marginHorizontal="8dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            app:contentPadding="16dp"
+            tools:ignore="MissingConstrain ts">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="100">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="60"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/map_fragment_bus_info__time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/calibri"
+                        android:text="10:00PM - 07:30AM"
+                        android:textStyle="bold"
+                        android:textColor="#000000"
+                        />
+                    <TextView
+                        android:id="@+id/map_fragment_bus_info_company_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/calibri"
+                        android:text="Hanif Paribahon"
+                        android:textStyle="bold"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="4dp"
+                        android:textColor="#4b4b4b"
+                        />
+                    <TextView
+                        android:id="@+id/map_fragment_bus_info_ac_status"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/calibri"
+                        android:text=" Non A/C"
+                        android:textColor="#8a8a8a"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="40"
+                    android:gravity="center"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/map_fragment_bus_info_fare"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/calibri"
+                        android:text="৳400.00"
+                        android:textAlignment="textEnd"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:textColor="#f5a622"
+                        android:gravity="end" />
+                    <TextView
+                        android:id="@+id/map_fragment_bus_info_booked_seat_no"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/calibri"
+                        android:text="24 Seats"
+                        android:textAlignment="textEnd"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="4dp"
+                        android:textColor="#89868C"
+                        android:gravity="end" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+
+        <!--    seat plan card view    -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/map_fragment_bus_info_container"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            app:cardCornerRadius="4dp"
+            app:cardUseCompatPadding="true"
+            app:contentPadding="8dp">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <fragment
+                    android:id="@+id/map_fragment_map"
+                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+
+
+    </RelativeLayout>
+
+</FrameLayout>

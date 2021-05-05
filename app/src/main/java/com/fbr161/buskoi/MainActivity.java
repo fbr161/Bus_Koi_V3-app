@@ -4,13 +4,12 @@ package com.fbr161.buskoi;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.fbr161.buskoi.ui.home.HomeFragment;
+import com.fbr161.buskoi.ui.home.view.HomeFragment;
 import com.fbr161.buskoi.ui.purchase_ticket.view.PurchaseTicketFragment;
 import com.google.android.material.navigation.NavigationView;
 //import com.google.android.material.navigation.NavigationView;
