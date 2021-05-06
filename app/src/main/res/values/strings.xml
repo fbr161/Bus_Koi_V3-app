@@ -21,5 +21,11 @@
 
     <string name="map_api_key">AIzaSyCFx98FZDREVlsuLUV6JNeAGJDQJ1pe2LE</string>
     <string name="api_server">192.168.0.9</string>
+    <string name="title_activity_sign_in__sign_up_">SignIn_SignUp_Activity</string>
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+    <string name="hello_world">Hello Square World!</string>
 
 </resources>

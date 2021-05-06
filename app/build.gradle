@@ -41,6 +41,7 @@ dependencies {
 
     //map
     implementation 'com.google.android.gms:play-services-maps:16.0.0'
+    implementation 'androidx.wear:wear:1.1.0'
 
 
     testImplementation 'junit:junit:4.12'
@@ -60,6 +61,7 @@ dependencies {
     //noinspection GradleCompatible
 
     implementation 'com.android.volley:volley:1.1.1'
+    compileOnly 'com.google.android.wearable:wearable:2.8.1'
 
     //viewModel
     def lifecycle_version = "2.3.1"

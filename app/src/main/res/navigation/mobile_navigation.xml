@@ -18,4 +18,10 @@
         android:label="@string/menu_purchase_ticket"
         tools:layout="@layout/fragment_purchase_ticket" />
 
+    <fragment
+        android:id="@+id/nav_signUp"
+        android:name="com.fbr161.buskoi.signIn_signUp.sign_up.SignUp_Fragment"
+        android:label="signUp"
+        tools:layout="@layout/fragment_sign_up" />
+
 </navigation>
