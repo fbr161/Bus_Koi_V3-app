@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <!--    -->
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/booked_bus_list_recycleview_item_container"
+        android:id="@+id/ticket_history_list_recycleview_item_container"
         app:cardCornerRadius="4dp"
         app:cardUseCompatPadding="true"
         android:clickable="true"
@@ -31,7 +30,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/booked_bus_list_recycleview_item_time"
+                    android:id="@+id/ticket_history_list_recycleview_item_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/calibri"
@@ -40,7 +39,7 @@
                     android:textColor="#000000"
                     />
                 <TextView
-                    android:id="@+id/booked_bus_list_recycleview_item_date"
+                    android:id="@+id/ticket_history_list_recycleview_item_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/print_clearly"
@@ -49,7 +48,7 @@
                     android:textColor="#000000"
                     />
                 <TextView
-                    android:id="@+id/booked_bus_list_recycleview_item_company_name"
+                    android:id="@+id/ticket_history_list_recycleview_item_company_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/calibri"
@@ -58,7 +57,7 @@
                     android:textColor="#4b4b4b"
                     />
                 <TextView
-                    android:id="@+id/booked_bus_list_recycleview_item_ac_status"
+                    android:id="@+id/ticket_history_list_recycleview_item_ac_status"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/calibri"
@@ -75,7 +74,7 @@
                 android:gravity="center"
                 android:orientation="vertical">
                 <TextView
-                    android:id="@+id/booked_bus_list_recycleview_item_fare"
+                    android:id="@+id/ticket_history_list_recycleview_item_fare"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/calibri"
@@ -86,7 +85,7 @@
                     android:textColor="#f5a622"
                     android:gravity="end" />
                 <TextView
-                    android:id="@+id/booked_bus_list_recycleview_item_seat_no"
+                    android:id="@+id/ticket_history_list_recycleview_item_seat_no"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/calibri"
@@ -102,6 +101,5 @@
     </androidx.cardview.widget.CardView>
 
     <!--    -->
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,6 +16,10 @@
 
     <item android:title="others">
         <menu>
+            <item android:id="@+id/menu_ticket_history"
+                android:icon="@drawable/ic_history_24"
+                android:title="Ticket History"/>
+
             <item android:id="@+id/menu_emergency_contact_number"
                 android:icon="@drawable/ic_emergncy"
                 android:title="Emergency Contact Number"/>

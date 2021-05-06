@@ -9,8 +9,10 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fbr161.buskoi.ui.emergency_contacts.view.contact_list.Emergency_Contact_List_Fragment;
 import com.fbr161.buskoi.ui.home.view.HomeFragment;
 import com.fbr161.buskoi.ui.purchase_ticket.view.PurchaseTicketFragment;
+import com.fbr161.buskoi.ui.ticket_purchase_history.view.ticket_history_list.Ticket_History_List_Fragment;
 import com.google.android.material.navigation.NavigationView;
 //import com.google.android.material.navigation.NavigationView;
 //import android.support.design.widget.NavigationView;
@@ -147,10 +149,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragement_container, new PurchaseTicketFragment("","","")).commit();
                 break;
 
+            case R.id.menu_ticket_history:
+                toolbar.setTitle("History");
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragement_container, new Ticket_History_List_Fragment()).addToBackStack(null).commit();
+                break;
+
+
             case R.id.menu_emergency_contact_number:
-                //Intent intent = new Intent(this,SOS.class);
-                //startActivity(intent);
-                Toast.makeText(this, "Emergency", Toast.LENGTH_SHORT).show();
+                toolbar.setTitle("Emergency No.");
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragement_container, new Emergency_Contact_List_Fragment()).addToBackStack(null).commit();
                 break;
 
 
