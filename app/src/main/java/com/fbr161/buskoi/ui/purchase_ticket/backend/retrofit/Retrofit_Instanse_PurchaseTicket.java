@@ -1,5 +1,7 @@
 package com.fbr161.buskoi.ui.purchase_ticket.backend.retrofit;
 
+import android.util.Log;
+
 import com.fbr161.buskoi.constant.Constant;
 
 import retrofit2.Retrofit;
@@ -13,10 +15,11 @@ public class Retrofit_Instanse_PurchaseTicket {
     public static Retrofit getInstance() {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
-                    .baseUrl(Constant.Url.BASE_URL)
+                    .baseUrl(Constant.Url.PURCHASE_TICKET_BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
+
         return retrofit;
     }
 }

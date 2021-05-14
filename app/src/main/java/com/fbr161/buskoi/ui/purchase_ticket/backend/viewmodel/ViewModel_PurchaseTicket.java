@@ -12,6 +12,9 @@ import com.fbr161.buskoi.ui.purchase_ticket.backend.model.SeatCondition;
 import com.fbr161.buskoi.ui.purchase_ticket.backend.repository.Repository_PurchaseTicket;
 import com.fbr161.buskoi.ui.purchase_ticket.backend.retrofit.Retrofit_Instanse_PurchaseTicket;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -30,6 +33,17 @@ public class ViewModel_PurchaseTicket extends ViewModel {
     }
 
     public LiveData<List<Bus>> getSearchedBusListLiveData(String frm, String to, String date) {
+
+
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            String[] dateInArray = date.split("-");
+            Date dt = formatter.parse(dateInArray[2]+"-"+dateInArray[1]+"-"+dateInArray[0]);
+            date = formatter.format(dt);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Log.d("wtffffffff", frm+", "+to+", "+date);
 
 //        Log.d("wtf__ViewModel_PurchaseTicket", "getSearchedBusListLiveData__before__repository_purchaseTicket.getSearchedBusList");
           busListLiveData = (MutableLiveData<List<Bus>>) repository_purchaseTicket.getSearchedBusList(frm, to, date) ;
@@ -70,7 +84,7 @@ public class ViewModel_PurchaseTicket extends ViewModel {
 
         IssueTicket it = issueTicketMutableLiveData.getValue();
         it.setFromToDateDayName(from,to, date, dayOfWeek);
-        issueTicketMutableLiveData.setValue(it);
+        issueTicketMutableLiveData.postValue(it);
     }
 
     public LiveData<HashMap<String, String>> getFromToDateDayName(){

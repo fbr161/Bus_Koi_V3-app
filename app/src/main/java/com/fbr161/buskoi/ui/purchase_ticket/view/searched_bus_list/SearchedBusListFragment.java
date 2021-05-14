@@ -92,12 +92,7 @@ public class SearchedBusListFragment extends Fragment {
         //Log.d("wtf__SearchedBusListFragment", "onActivityCreated__before__viewModel_PurchaseTicket__initialization");
         viewModel_PurchaseTicket = ViewModelProviders.of(requireActivity()).get(ViewModel_PurchaseTicket.class);
         //Log.d("wtf__SearchedBusListFragment", "onActivityCreated__after_viewModel_PurchaseTicket__initialization");
-        viewModel_PurchaseTicket.getSearchedBusListLiveData(from_location, to_location, date).observe(getViewLifecycleOwner(), new Observer<List<Bus>>() {
-            @Override
-            public void onChanged(List<Bus> buses) {
-                recyclerView.setAdapter(new Search_bus_list_Fragment_recycleView_adapter((ArrayList<Bus>)buses, context, viewModel_PurchaseTicket));
-            }
-        });
+
 
         viewModel_PurchaseTicket.getFromToDateDayName().observe(getViewLifecycleOwner(), new Observer<HashMap<String, String>>() {
 
@@ -113,6 +108,15 @@ public class SearchedBusListFragment extends Fragment {
                 frm_txtView.setText(from_location);
                 to_txtView.setText(to_location);
                 date_txtView.setText(date+"  |  "+dayOfWeek);
+
+                viewModel_PurchaseTicket.getSearchedBusListLiveData(from_location, to_location, date).observe(getViewLifecycleOwner(), new Observer<List<Bus>>() {
+                    @Override
+                    public void onChanged(List<Bus> buses) {
+                        recyclerView.setAdapter(new Search_bus_list_Fragment_recycleView_adapter((ArrayList<Bus>)buses, context, viewModel_PurchaseTicket));
+                    }
+                });
+
+
             }
         });
 

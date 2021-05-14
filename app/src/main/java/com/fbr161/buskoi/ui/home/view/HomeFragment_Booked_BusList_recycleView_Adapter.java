@@ -29,9 +29,12 @@ public class HomeFragment_Booked_BusList_recycleView_Adapter extends RecyclerVie
     Context context;
     //ViewModel_BookedBus_Home viewModel_bookedBus_home;
 
-    public HomeFragment_Booked_BusList_recycleView_Adapter(ArrayList<BookedBus> bus_lists, Context context){ //, ViewModel_BookedBus_Home viewModel_bookedBus_home) {
+    ViewModel_BookedBus_Home viewModel_bookedBus_home;
+
+    public HomeFragment_Booked_BusList_recycleView_Adapter(ArrayList<BookedBus> bus_lists, Context context, ViewModel_BookedBus_Home viewModel_bookedBus_home){ //, ViewModel_BookedBus_Home viewModel_bookedBus_home) {
         this.bus_lists = bus_lists;
         this.context = context;
+        this.viewModel_bookedBus_home = viewModel_bookedBus_home;
        // this.viewModel_bookedBus_home = viewModel_bookedBus_home;
     }
 
@@ -81,6 +84,7 @@ public class HomeFragment_Booked_BusList_recycleView_Adapter extends RecyclerVie
                 MapBusTrackingFragment mapBusTrackingFragment = new MapBusTrackingFragment();
                 mapBusTrackingFragment.setArguments(arg);
 
+//                viewModel_bookedBus_home.selected_bus_schedule_id(schedule_id);
                 //viewModel_PurchaseTicket.setScheduleId_DepTime_CompanyName_AcStatus_Fare_AvailableSeats(schedule_id, depr_time, company_name, ac_status_boolean, fare, available_seat);
 
                 AppCompatActivity activity = (AppCompatActivity)view.getContext();

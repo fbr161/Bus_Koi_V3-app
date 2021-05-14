@@ -13,8 +13,7 @@ public class BookedBus {
 
     String schedule_id;
 
-    double last_Lat = 0;
-    double last_Lon = 0;
+    BusLocation busLocation;
 
 
     public BookedBus(String from, String to, String dep_time, String dep_date, String company_name, double fare, String booked_seats_no, boolean ac_status, String schedule_id) {
@@ -27,6 +26,8 @@ public class BookedBus {
         this.fare = fare;
         this.ac_status = ac_status;
         this.schedule_id = schedule_id;
+
+        busLocation = new BusLocation(0,0);
     }
 
     public String getDep_time() {
@@ -57,18 +58,6 @@ public class BookedBus {
         return schedule_id;
     }
 
-    public void setLast_Lat_and_Lon(double last_Lat, double last_Lon) {
-        this.last_Lat = last_Lat;
-        this.last_Lon = last_Lon;
-    }
-
-    public double getLast_Lat() {
-        return last_Lat;
-    }
-
-    public double getLast_Lon() {
-        return last_Lon;
-    }
 
     public String getFrom_Location() {
         return from;
@@ -76,5 +65,13 @@ public class BookedBus {
 
     public String getTo_Location() {
         return to;
+    }
+
+    public BusLocation getBusLocation() {
+        return busLocation;
+    }
+
+    public void setBusLocation(double lat, double lon) {
+        busLocation.setLast_Lat_and_Lon(lat, lon);
     }
 }
