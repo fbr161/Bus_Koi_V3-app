@@ -53,6 +53,7 @@ public class Ticket_History_List_Fragment_RecyclerView_Adapter extends RecyclerV
         double fare = pastBusArrayList.get(i).getFare();
         String seat_no = pastBusArrayList.get(i).getSeat_no();
 
+
         holder.dept_date_textView.setText(date);
         holder.dept_time_textView.setText(time);
         holder.company_name_textView.setText(company_name);

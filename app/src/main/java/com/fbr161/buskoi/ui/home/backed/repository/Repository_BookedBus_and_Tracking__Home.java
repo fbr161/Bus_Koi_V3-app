@@ -25,9 +25,7 @@ public class Repository_BookedBus_and_Tracking__Home {
     private API_BookedBus_Home api;
 
     public Repository_BookedBus_and_Tracking__Home() {
-        //Log.d("wtf__Repository_PurchaseTicket", "Repository_PurchaseTicket__before__api__initialization");
         api = Retrofit_Instance_BookedBus_Home.getInstance().create(API_BookedBus_Home.class);
-        //Log.d("wtf__Repository_PurchaseTicket", "Repository_PurchaseTicket__after__api__initialization");
     }
 
     public LiveData<List<BookedBus>> getBookededBusList(String user_phn_no) {
