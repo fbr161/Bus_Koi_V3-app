@@ -55,7 +55,16 @@ public class Constant {
         public final static String EMERGENCY_CONTACT_READ_API = "api_read_emergency_contact.php";
         public final static String EMERGENCY_CONTACT_UPDATE_API = "api_update_emergency_contact.php";
 
+    }
 
+    public class Emergency_Contact{
+
+        public final static String EMERGENCY_CONTACT_EDIT_TEXT_ACTION_STATUS_KEY = "emergency_contact_action_status_key";
+        public final static String EMERGENCY_CONTACT_EDIT_TEXT_ADD_ACTION = "emergency_contact_add";
+        public final static String EMERGENCY_CONTACT_EDIT_TEXT_UPDATE_ACTION = "emergency_contact_update";
+
+        public final static String EMERGENCY_CONTACT_NAME_ARG_KEY = "emergency_contact_name";
+        public final static String EMERGENCY_CONTACT_PHONE_NO_ARG_KEY = "emergency_contact_phn_no";
     }
 
 }

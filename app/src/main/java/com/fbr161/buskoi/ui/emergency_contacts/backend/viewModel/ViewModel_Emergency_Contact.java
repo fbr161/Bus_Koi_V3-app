@@ -14,6 +14,8 @@ public class ViewModel_Emergency_Contact extends ViewModel{
     MutableLiveData<Boolean> updateEmergencyContact_status = new MutableLiveData<>();
     MutableLiveData<Boolean> deleteEmergencyContact_status = new MutableLiveData<>();
 
+    String user_phn_no;
+
     Repository_Emergency_Contact repository_emergency_contact;
 
     public ViewModel_Emergency_Contact() {
@@ -22,6 +24,7 @@ public class ViewModel_Emergency_Contact extends ViewModel{
         insertEmergencyContact_status.postValue(false);
         updateEmergencyContact_status.postValue(false);
         deleteEmergencyContact_status.postValue(false);
+
     }
 
     public LiveData<Boolean> insertEmergencyContact(String user_phn_no, String emergency_contact_phn_no, String emergency_contact_name){
@@ -50,5 +53,13 @@ public class ViewModel_Emergency_Contact extends ViewModel{
         deleteEmergencyContact_status = (MutableLiveData<Boolean>) repository_emergency_contact.deleteEmergencyContact(user_phn_no);
 
         return deleteEmergencyContact_status;
+    }
+
+    public void setUser_phn_no(String user_phn_no) {
+        this.user_phn_no = user_phn_no;
+    }
+
+    public String getUser_phn_no() {
+        return user_phn_no;
     }
 }

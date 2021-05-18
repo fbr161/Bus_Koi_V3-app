@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.fbr161.buskoi.R;
 import com.fbr161.buskoi.constant.Constant;
@@ -66,6 +67,8 @@ public class Emergency_Contact_List_Fragment extends Fragment {
         user_name = user_info_pref.getString(Constant.SharedPreferences.KEY___USER_NAME, "");
         user_phn_no = user_info_pref.getString(Constant.SharedPreferences.KEY___USER_PHONE_NO, "");
 
+        viewModel_emergency_contact.setUser_phn_no(user_phn_no);
+
         viewModel_emergency_contact.readEmergencyContact(user_phn_no).observe(getViewLifecycleOwner(), new Observer<UsersEmergencyContact>() {
             @Override
             public void onChanged(UsersEmergencyContact usersEmergencyContact) {
@@ -73,7 +76,7 @@ public class Emergency_Contact_List_Fragment extends Fragment {
                 if(usersEmergencyContact != null){
                     usersEmergencyContact_list.add(usersEmergencyContact);
 
-                    recyclerView.setAdapter(new Emergency_Contact_List_RecyclerView_Adapter(usersEmergencyContact_list, context));
+                    recyclerView.setAdapter(new Emergency_Contact_List_RecyclerView_Adapter(usersEmergencyContact_list, viewModel_emergency_contact, context));
                     recyclerView.setHasFixedSize(true);
                     recyclerView.setLayoutManager( new LinearLayoutManager(context));
                 }
@@ -85,7 +88,15 @@ public class Emergency_Contact_List_Fragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (usersEmergencyContact_list.size() == 0){
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragement_container, new Emergency_Contact_EditText_Fragment()).addToBackStack(null).commit();
+                    Bundle arg = new Bundle();
+                    arg.putString(Constant.Emergency_Contact.EMERGENCY_CONTACT_EDIT_TEXT_ACTION_STATUS_KEY, Constant.Emergency_Contact.EMERGENCY_CONTACT_EDIT_TEXT_ADD_ACTION);
+
+                    Emergency_Contact_EditText_Fragment emergency_contact_editText_fragment = new Emergency_Contact_EditText_Fragment();
+                    emergency_contact_editText_fragment.setArguments(arg);
+
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragement_container, emergency_contact_editText_fragment).addToBackStack(null).commit();
+                }else {
+                    Toast.makeText(getContext(), "You can't add twice", Toast.LENGTH_SHORT).show();
                 }
             }
         });

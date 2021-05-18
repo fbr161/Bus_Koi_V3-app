@@ -1,6 +1,7 @@
 package com.fbr161.buskoi.ui.emergency_contacts.view.contact_list;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,21 +11,27 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fbr161.buskoi.R;
+import com.fbr161.buskoi.constant.Constant;
 import com.fbr161.buskoi.ui.emergency_contacts.backend.model.UsersEmergencyContact;
+import com.fbr161.buskoi.ui.emergency_contacts.backend.viewModel.ViewModel_Emergency_Contact;
+import com.fbr161.buskoi.ui.emergency_contacts.view.contact_editText.Emergency_Contact_EditText_Fragment;
 
 import java.util.ArrayList;
 
 public class Emergency_Contact_List_RecyclerView_Adapter extends RecyclerView.Adapter<Emergency_Contact_List_RecyclerView_Adapter.Holder>{
 
     ArrayList<UsersEmergencyContact> emergencyNumbers = new ArrayList<>();
+    ViewModel_Emergency_Contact viewModel_emergency_contact;
     Context context;
 
-    public Emergency_Contact_List_RecyclerView_Adapter(ArrayList<UsersEmergencyContact> emergencyNumbers, Context context) {
+    public Emergency_Contact_List_RecyclerView_Adapter(ArrayList<UsersEmergencyContact> emergencyNumbers, ViewModel_Emergency_Contact viewModel, Context context) {
         this.emergencyNumbers = emergencyNumbers;
+        viewModel_emergency_contact = viewModel;
         this.context = context;
 
     }
@@ -79,10 +86,26 @@ public class Emergency_Contact_List_RecyclerView_Adapter extends RecyclerView.Ad
                             switch (item.getItemId()){
                                 case R.id.menu_emergency_contact_list_item_edit_menu:
                                     int i = getBindingAdapterPosition();
-                                    Toast.makeText(context, i+"", Toast.LENGTH_SHORT).show();
+
+                                    Bundle arg = new Bundle();
+                                    arg.putString(Constant.Emergency_Contact.EMERGENCY_CONTACT_EDIT_TEXT_ACTION_STATUS_KEY, Constant.Emergency_Contact.EMERGENCY_CONTACT_EDIT_TEXT_UPDATE_ACTION);
+                                    arg.putString(Constant.Emergency_Contact.EMERGENCY_CONTACT_NAME_ARG_KEY, emergencyNumbers.get(i).getName());
+                                    arg.putString(Constant.Emergency_Contact.EMERGENCY_CONTACT_PHONE_NO_ARG_KEY, emergencyNumbers.get(i).getPhn_no());
+
+                                    Emergency_Contact_EditText_Fragment emergency_contact_editText_fragment = new Emergency_Contact_EditText_Fragment();
+                                    emergency_contact_editText_fragment.setArguments(arg);
+
+                                    AppCompatActivity activity = (AppCompatActivity)view.getContext();
+                                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragement_container, emergency_contact_editText_fragment).addToBackStack(null).commit();
+
                                     return true;
 
                                 case R.id.menu_emergency_contact_list_item_delete_menu:
+                                    AppCompatActivity actvt = (AppCompatActivity)view.getContext();
+
+                                    viewModel_emergency_contact.deleteEmergencyContact( viewModel_emergency_contact.getUser_phn_no() );
+
+                                    actvt.getSupportFragmentManager().beginTransaction().replace(R.id.fragement_container, new Emergency_Contact_List_Fragment()).commit();
                                     return true;
 
                             }
